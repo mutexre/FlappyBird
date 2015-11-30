@@ -1,0 +1,475 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		922552B81C09C12B00C994BE /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479571C06367900132374 /* Node.cpp */; };
+		922552BB1C09CB7B00C994BE /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 922552B91C09CB7B00C994BE /* Transform.cpp */; };
+		92257F9A1C00510900187A7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92257F991C00510900187A7A /* main.m */; };
+		92257F9D1C00510900187A7A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92257F9C1C00510900187A7A /* AppDelegate.mm */; };
+		92257F9F1C00510900187A7A /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 92257F9E1C00510900187A7A /* Shader.fsh */; };
+		92257FA11C00510900187A7A /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 92257FA01C00510900187A7A /* Shader.vsh */; };
+		92257FA91C00510900187A7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92257FA81C00510900187A7A /* Assets.xcassets */; };
+		92257FAC1C00510900187A7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92257FAA1C00510900187A7A /* LaunchScreen.storyboard */; };
+		92257FB51C007C0D00187A7A /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92257FB41C007C0D00187A7A /* ViewController.mm */; };
+		92257FB71C00849E00187A7A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92257FB61C00849E00187A7A /* OpenGLES.framework */; };
+		92257FBA1C008E0D00187A7A /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92257FB91C008E0D00187A7A /* GLView.m */; };
+		924479231C05CEA900132374 /* FlappyBird.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479211C05CEA900132374 /* FlappyBird.cpp */; };
+		924479471C06363600132374 /* Helper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479421C06363600132374 /* Helper.cpp */; };
+		924479481C06363600132374 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479451C06363600132374 /* Program.cpp */; };
+		924479511C06365100132374 /* Circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479491C06365100132374 /* Circle.cpp */; };
+		924479521C06365100132374 /* Figure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9244794B1C06365100132374 /* Figure.cpp */; };
+		924479531C06365100132374 /* Square.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9244794D1C06365100132374 /* Square.cpp */; };
+		924479541C06365100132374 /* Triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9244794F1C06365100132374 /* Triangle.cpp */; };
+		9244795C1C0636A700132374 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479591C0636A700132374 /* Game.cpp */; };
+		9244795D1C06452E00132374 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479551C06367900132374 /* Mesh.cpp */; };
+		9294D6E01C0BC75500E44390 /* Texture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9294D6DE1C0BC75500E44390 /* Texture.mm */; };
+		9294D6E61C0BE13C00E44390 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9294D6E41C0BE13C00E44390 /* Image.cpp */; };
+		9294D6EA1C0BEB9D00E44390 /* game over.png in Resources */ = {isa = PBXBuildFile; fileRef = 9294D6E71C0BEB9D00E44390 /* game over.png */; };
+		9294D6EB1C0BEB9D00E44390 /* retry.png in Resources */ = {isa = PBXBuildFile; fileRef = 9294D6E81C0BEB9D00E44390 /* retry.png */; };
+		9294D6EC1C0BEB9D00E44390 /* tap to play.png in Resources */ = {isa = PBXBuildFile; fileRef = 9294D6E91C0BEB9D00E44390 /* tap to play.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		922552B91C09CB7B00C994BE /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = GameFramework/Transform.cpp; sourceTree = "<group>"; };
+		922552BA1C09CB7B00C994BE /* Transform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Transform.hpp; path = GameFramework/Transform.hpp; sourceTree = "<group>"; };
+		92257F951C00510900187A7A /* FlappyBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlappyBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		92257F991C00510900187A7A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		92257F9B1C00510900187A7A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		92257F9C1C00510900187A7A /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		92257F9E1C00510900187A7A /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
+		92257FA01C00510900187A7A /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
+		92257FA81C00510900187A7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		92257FAB1C00510900187A7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		92257FAD1C00510900187A7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92257FB31C007C0D00187A7A /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		92257FB41C007C0D00187A7A /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		92257FB61C00849E00187A7A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		92257FB81C008E0D00187A7A /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
+		92257FB91C008E0D00187A7A /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
+		924479211C05CEA900132374 /* FlappyBird.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlappyBird.cpp; sourceTree = "<group>"; };
+		924479221C05CEA900132374 /* FlappyBird.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FlappyBird.hpp; sourceTree = "<group>"; };
+		924479421C06363600132374 /* Helper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Helper.cpp; path = GameFramework/Helper/Helper.cpp; sourceTree = "<group>"; };
+		924479431C06363600132374 /* Helper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Helper.hpp; path = GameFramework/Helper/Helper.hpp; sourceTree = "<group>"; };
+		924479441C06363600132374 /* Option.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Option.hpp; path = GameFramework/Helper/Option.hpp; sourceTree = "<group>"; };
+		924479451C06363600132374 /* Program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Program.cpp; path = GameFramework/Helper/Program.cpp; sourceTree = "<group>"; };
+		924479461C06363600132374 /* Program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Program.hpp; path = GameFramework/Helper/Program.hpp; sourceTree = "<group>"; };
+		924479491C06365100132374 /* Circle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Circle.cpp; path = GameFramework/Geometry/Circle.cpp; sourceTree = "<group>"; };
+		9244794A1C06365100132374 /* Circle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Circle.hpp; path = GameFramework/Geometry/Circle.hpp; sourceTree = "<group>"; };
+		9244794B1C06365100132374 /* Figure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Figure.cpp; path = GameFramework/Geometry/Figure.cpp; sourceTree = "<group>"; };
+		9244794C1C06365100132374 /* Figure.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Figure.hpp; path = GameFramework/Geometry/Figure.hpp; sourceTree = "<group>"; };
+		9244794D1C06365100132374 /* Square.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Square.cpp; path = GameFramework/Geometry/Square.cpp; sourceTree = "<group>"; };
+		9244794E1C06365100132374 /* Square.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Square.hpp; path = GameFramework/Geometry/Square.hpp; sourceTree = "<group>"; };
+		9244794F1C06365100132374 /* Triangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Triangle.cpp; path = GameFramework/Geometry/Triangle.cpp; sourceTree = "<group>"; };
+		924479501C06365100132374 /* Triangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Triangle.hpp; path = GameFramework/Geometry/Triangle.hpp; sourceTree = "<group>"; };
+		924479551C06367900132374 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mesh.cpp; path = GameFramework/SceneGraph/Mesh.cpp; sourceTree = "<group>"; };
+		924479561C06367900132374 /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Mesh.hpp; path = GameFramework/SceneGraph/Mesh.hpp; sourceTree = "<group>"; };
+		924479571C06367900132374 /* Node.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Node.cpp; path = GameFramework/SceneGraph/Node.cpp; sourceTree = "<group>"; };
+		924479581C06367900132374 /* Node.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Node.hpp; path = GameFramework/SceneGraph/Node.hpp; sourceTree = "<group>"; };
+		924479591C0636A700132374 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = GameFramework/Game.cpp; sourceTree = "<group>"; };
+		9244795A1C0636A700132374 /* Game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Game.hpp; path = GameFramework/Game.hpp; sourceTree = "<group>"; };
+		9244795B1C0636A700132374 /* GameFramework.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameFramework.hpp; path = GameFramework/GameFramework.hpp; sourceTree = "<group>"; };
+		9294D6D61C0BADF100E44390 /* Bird.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Bird.hpp; sourceTree = "<group>"; };
+		9294D6DE1C0BC75500E44390 /* Texture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Texture.mm; path = GameFramework/Helper/Texture.mm; sourceTree = "<group>"; };
+		9294D6DF1C0BC75500E44390 /* Texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Texture.hpp; path = GameFramework/Helper/Texture.hpp; sourceTree = "<group>"; };
+		9294D6E41C0BE13C00E44390 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = GameFramework/Image.cpp; sourceTree = "<group>"; };
+		9294D6E51C0BE13C00E44390 /* Image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Image.hpp; path = GameFramework/Image.hpp; sourceTree = "<group>"; };
+		9294D6E71C0BEB9D00E44390 /* game over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game over.png"; path = "Resources/game over.png"; sourceTree = "<group>"; };
+		9294D6E81C0BEB9D00E44390 /* retry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = retry.png; path = Resources/retry.png; sourceTree = "<group>"; };
+		9294D6E91C0BEB9D00E44390 /* tap to play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tap to play.png"; path = "Resources/tap to play.png"; sourceTree = "<group>"; };
+		9294D6EE1C0C085200E44390 /* Obstacles.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Obstacles.hpp; sourceTree = "<group>"; };
+		9294D6F01C0CFEC100E44390 /* Playfield.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Playfield.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		92257F921C00510900187A7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92257FB71C00849E00187A7A /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		92257F8C1C00510900187A7A = {
+			isa = PBXGroup;
+			children = (
+				92257FB61C00849E00187A7A /* OpenGLES.framework */,
+				92257F971C00510900187A7A /* FlappyBird */,
+				92257F961C00510900187A7A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		92257F961C00510900187A7A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				92257F951C00510900187A7A /* FlappyBird.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		92257F971C00510900187A7A /* FlappyBird */ = {
+			isa = PBXGroup;
+			children = (
+				924479201C05CD6A00132374 /* Game Framework */,
+				9294D6D41C0BADD000E44390 /* FB */,
+				92257F9B1C00510900187A7A /* AppDelegate.h */,
+				92257F9C1C00510900187A7A /* AppDelegate.mm */,
+				92257FB31C007C0D00187A7A /* ViewController.h */,
+				92257FB41C007C0D00187A7A /* ViewController.mm */,
+				92257FB81C008E0D00187A7A /* GLView.h */,
+				92257FB91C008E0D00187A7A /* GLView.m */,
+				9244791F1C05CD5200132374 /* Shaders */,
+				924479401C06355400132374 /* Resources */,
+				92257F981C00510900187A7A /* Supporting Files */,
+			);
+			path = FlappyBird;
+			sourceTree = "<group>";
+		};
+		92257F981C00510900187A7A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				92257F991C00510900187A7A /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9244791F1C05CD5200132374 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				92257FA01C00510900187A7A /* Shader.vsh */,
+				92257F9E1C00510900187A7A /* Shader.fsh */,
+			);
+			name = Shaders;
+			sourceTree = "<group>";
+		};
+		924479201C05CD6A00132374 /* Game Framework */ = {
+			isa = PBXGroup;
+			children = (
+				924479411C06358B00132374 /* Helper */,
+				924479351C0633E900132374 /* Geometry */,
+				9244795B1C0636A700132374 /* GameFramework.hpp */,
+				922552BA1C09CB7B00C994BE /* Transform.hpp */,
+				922552B91C09CB7B00C994BE /* Transform.cpp */,
+				924479581C06367900132374 /* Node.hpp */,
+				924479571C06367900132374 /* Node.cpp */,
+				924479561C06367900132374 /* Mesh.hpp */,
+				924479551C06367900132374 /* Mesh.cpp */,
+				9294D6E51C0BE13C00E44390 /* Image.hpp */,
+				9294D6E41C0BE13C00E44390 /* Image.cpp */,
+				9244795A1C0636A700132374 /* Game.hpp */,
+				924479591C0636A700132374 /* Game.cpp */,
+			);
+			name = "Game Framework";
+			sourceTree = "<group>";
+		};
+		924479351C0633E900132374 /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				9244794C1C06365100132374 /* Figure.hpp */,
+				9244794B1C06365100132374 /* Figure.cpp */,
+				9244794E1C06365100132374 /* Square.hpp */,
+				9244794D1C06365100132374 /* Square.cpp */,
+				924479501C06365100132374 /* Triangle.hpp */,
+				9244794F1C06365100132374 /* Triangle.cpp */,
+				9244794A1C06365100132374 /* Circle.hpp */,
+				924479491C06365100132374 /* Circle.cpp */,
+			);
+			name = Geometry;
+			sourceTree = "<group>";
+		};
+		924479401C06355400132374 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9294D6E71C0BEB9D00E44390 /* game over.png */,
+				9294D6E81C0BEB9D00E44390 /* retry.png */,
+				9294D6E91C0BEB9D00E44390 /* tap to play.png */,
+				92257FA81C00510900187A7A /* Assets.xcassets */,
+				92257FAA1C00510900187A7A /* LaunchScreen.storyboard */,
+				92257FAD1C00510900187A7A /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		924479411C06358B00132374 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				924479441C06363600132374 /* Option.hpp */,
+				924479461C06363600132374 /* Program.hpp */,
+				924479451C06363600132374 /* Program.cpp */,
+				9294D6DF1C0BC75500E44390 /* Texture.hpp */,
+				9294D6DE1C0BC75500E44390 /* Texture.mm */,
+				924479431C06363600132374 /* Helper.hpp */,
+				924479421C06363600132374 /* Helper.cpp */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		9294D6D41C0BADD000E44390 /* FB */ = {
+			isa = PBXGroup;
+			children = (
+				924479221C05CEA900132374 /* FlappyBird.hpp */,
+				924479211C05CEA900132374 /* FlappyBird.cpp */,
+				9294D6D61C0BADF100E44390 /* Bird.hpp */,
+				9294D6EE1C0C085200E44390 /* Obstacles.hpp */,
+				9294D6F01C0CFEC100E44390 /* Playfield.h */,
+			);
+			name = FB;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		92257F941C00510900187A7A /* FlappyBird */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92257FB01C00510900187A7A /* Build configuration list for PBXNativeTarget "FlappyBird" */;
+			buildPhases = (
+				92257F911C00510900187A7A /* Sources */,
+				92257F921C00510900187A7A /* Frameworks */,
+				92257F931C00510900187A7A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FlappyBird;
+			productName = FlappyBird;
+			productReference = 92257F951C00510900187A7A /* FlappyBird.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		92257F8D1C00510900187A7A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = mutexre;
+				TargetAttributes = {
+					92257F941C00510900187A7A = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 859799LX22;
+					};
+				};
+			};
+			buildConfigurationList = 92257F901C00510900187A7A /* Build configuration list for PBXProject "FlappyBird" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 92257F8C1C00510900187A7A;
+			productRefGroup = 92257F961C00510900187A7A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				92257F941C00510900187A7A /* FlappyBird */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		92257F931C00510900187A7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92257FA11C00510900187A7A /* Shader.vsh in Resources */,
+				9294D6EA1C0BEB9D00E44390 /* game over.png in Resources */,
+				9294D6EC1C0BEB9D00E44390 /* tap to play.png in Resources */,
+				92257FA91C00510900187A7A /* Assets.xcassets in Resources */,
+				92257FAC1C00510900187A7A /* LaunchScreen.storyboard in Resources */,
+				9294D6EB1C0BEB9D00E44390 /* retry.png in Resources */,
+				92257F9F1C00510900187A7A /* Shader.fsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		92257F911C00510900187A7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				922552BB1C09CB7B00C994BE /* Transform.cpp in Sources */,
+				924479481C06363600132374 /* Program.cpp in Sources */,
+				924479541C06365100132374 /* Triangle.cpp in Sources */,
+				9294D6E01C0BC75500E44390 /* Texture.mm in Sources */,
+				92257F9D1C00510900187A7A /* AppDelegate.mm in Sources */,
+				92257FB51C007C0D00187A7A /* ViewController.mm in Sources */,
+				924479511C06365100132374 /* Circle.cpp in Sources */,
+				924479471C06363600132374 /* Helper.cpp in Sources */,
+				9294D6E61C0BE13C00E44390 /* Image.cpp in Sources */,
+				9244795C1C0636A700132374 /* Game.cpp in Sources */,
+				924479531C06365100132374 /* Square.cpp in Sources */,
+				92257F9A1C00510900187A7A /* main.m in Sources */,
+				924479521C06365100132374 /* Figure.cpp in Sources */,
+				924479231C05CEA900132374 /* FlappyBird.cpp in Sources */,
+				9244795D1C06452E00132374 /* Mesh.cpp in Sources */,
+				922552B81C09C12B00C994BE /* Node.cpp in Sources */,
+				92257FBA1C008E0D00187A7A /* GLView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		92257FAA1C00510900187A7A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				92257FAB1C00510900187A7A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		92257FAE1C00510900187A7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		92257FAF1C00510900187A7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		92257FB11C00510900187A7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = FlappyBird;
+				INFOPLIST_FILE = FlappyBird/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mutexre.FlappyBird;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2d8d931d-cdb2-4647-bded-759b429c3ca6";
+			};
+			name = Debug;
+		};
+		92257FB21C00510900187A7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				HEADER_SEARCH_PATHS = FlappyBird;
+				INFOPLIST_FILE = FlappyBird/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mutexre.FlappyBird;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2d8d931d-cdb2-4647-bded-759b429c3ca6";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		92257F901C00510900187A7A /* Build configuration list for PBXProject "FlappyBird" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92257FAE1C00510900187A7A /* Debug */,
+				92257FAF1C00510900187A7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92257FB01C00510900187A7A /* Build configuration list for PBXNativeTarget "FlappyBird" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92257FB11C00510900187A7A /* Debug */,
+				92257FB21C00510900187A7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 92257F8D1C00510900187A7A /* Project object */;
+}

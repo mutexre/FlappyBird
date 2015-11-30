@@ -1,0 +1,8 @@
+xcuserdata
+.DS_Store
+win/x64
+win/Win32
+win/x86
+win/resources
+win/.vs
+*.sdf

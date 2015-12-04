@@ -19,9 +19,12 @@ public:
 protected:
     weak_ptr<Node> parent;
     list<shared_ptr<Node>> children;
+    shared_ptr<Program> program;
     list<shared_ptr<Mesh>> meshes;
     bool visible = true;
     float z = 0.f;
+    vec4 color;
+    float pointSize = 1.f;
 
     struct {
         Transform model;
@@ -34,7 +37,13 @@ public:
     Node(const shared_ptr<Node>&);
     virtual ~Node() {}
 
+    shared_ptr<Program> getProgram() const;
+    void setProgram(const shared_ptr<Program>&);
+
+    weak_ptr<Node> getParent() const;
     void setParent(const shared_ptr<Node>&);
+
+    list<shared_ptr<Node>>& getChildren();
     void addChild(const shared_ptr<Node>&);
 
     bool isVisible() const;
@@ -43,6 +52,9 @@ public:
     void unhide();
 
     void setZ(float);
+    void setPointSize(float);
+    void setColor(const vec4&);
+
     void addMesh(const shared_ptr<Mesh>&);
     void removeMesh(const shared_ptr<Mesh>&);
 
@@ -50,10 +62,20 @@ public:
     void setScale(float x, float y);
     void setScale(float);
 
+    float getSX() const;
+    float getSY() const;
+    void setSX(float);
+    void setSY(float);
+
     void setRotationAngle(float);
     void setTranslate(vec2);
     void setTranslate(float x, float y);
     void setTranslate(float);
+
+    float getX() const;
+    float getY() const;
+    void setX(float);
+    void setY(float);
 
     void updateModelTransformMatrix();
     void updateWorldTransformMatrix();

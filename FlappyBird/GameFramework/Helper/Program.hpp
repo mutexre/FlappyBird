@@ -12,19 +12,19 @@ class Program
 {
 public:
     struct Source {
-        std::string vertex, geometry, fragment;
+        string vertex, geometry, fragment;
     };
 
 private:
     struct Uniform {
-        std::string name;
+        string name;
         GLuint location;
         GLenum type;
         GLint size;
     };
 
     struct Attrib {
-        std::string name;
+        string name;
         GLuint location;
         GLenum type;
         GLint size;
@@ -32,11 +32,11 @@ private:
 
 private:
     GLuint program;
-    std::map<std::string, Uniform> uniforms;
-    std::map<std::string, Attrib> attribs;
+    map<string, Uniform> uniforms;
+    map<string, Attrib> attribs;
 
 private:
-    static GLuint compile(GLenum type, const std::string& source);
+    static GLuint compile(GLenum type, const string& source);
     static void link(GLuint id);
 
     void queryActiveAttributes();
@@ -51,15 +51,19 @@ public:
 
     void bind();
 
-    GLuint getAttributeLocation(const std::string& name);
-    GLuint getUniformLocation(const std::string& name);
+    bool isAttributeActive(const string&);
+    bool isUniformActive(const string&);
 
-    void setVertexAttr(const std::string&, float);
-    void setVertexAttr(const std::string&, float, float, float, float);
-    void setVertexAttr(const std::string&, const vec4&);
+    GLuint getAttributeLocation(const string& name);
+    GLuint getUniformLocation(const string& name);
 
-    void setUniform(const std::string&, float);
-    void setUniform(const std::string&, float, float, float, float);
-    void setUniform(const std::string&, const vec4&);
-    void setUniform(const std::string&, const mat3&, bool transpose = false);
+    void setVertexAttr(const string&, float);
+    void setVertexAttr(const string&, float, float, float, float);
+    void setVertexAttr(const string&, const vec4&);
+
+    void setUniform(const string&, int);
+    void setUniform(const string&, float);
+    void setUniform(const string&, float, float, float, float);
+    void setUniform(const string&, const vec4&);
+    void setUniform(const string&, const mat3&, bool transpose = false);
 };

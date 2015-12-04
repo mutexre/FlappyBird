@@ -8,8 +8,24 @@
 
 #include "GameFramework.hpp"
 
+shared_ptr<Program> Node::getProgram() const {
+    return program;
+}
+
+void Node::setProgram(const shared_ptr<Program>& p) {
+    program = p;
+}
+
+weak_ptr<Node> Node::getParent() const {
+    return parent;
+}
+
 void Node::setParent(const shared_ptr<Node>& p) {
     parent = p;
+}
+
+list<shared_ptr<Node>>& Node::getChildren() {
+    return children;
 }
 
 void Node::addChild(const shared_ptr<Node>& child) {
@@ -37,6 +53,14 @@ void Node::setZ(float z) {
     this->z = z;
 }
 
+void Node::setPointSize(float size) {
+    pointSize = size;
+}
+
+void Node::setColor(const vec4& c) {
+    color = c;
+}
+
 void Node::addMesh(const shared_ptr<Mesh>& mesh) {
     meshes.push_back(mesh);
 }
@@ -57,6 +81,22 @@ void Node::setScale(float value) {
     setScale(value, value);
 }
 
+float Node::getSX() const {
+    return transform.model.scale.x;
+}
+
+float Node::getSY() const {
+    return transform.model.scale.y;
+}
+
+void Node::setSX(float x) {
+    transform.model.setSX(x);
+}
+
+void Node::setSY(float y) {
+    transform.model.setSY(y);
+}
+
 void Node::setRotationAngle(float angle) {
     transform.model.setRotationAngle(angle);
 }
@@ -71,6 +111,26 @@ void Node::setTranslate(float x, float y) {
 
 void Node::setTranslate(float value) {
     setTranslate(value, value);
+}
+
+float Node::getX() const {
+    return transform.model.translate.x;
+}
+
+float Node::getY() const {
+    return transform.model.translate.y;
+}
+
+void Node::setX(float x) {
+    transform.model.setX(x);
+}
+
+void Node::setY(float y) {
+    transform.model.setY(y);
+}
+
+void Node::updateModelTransformMatrix() {
+    transform.model.updateIfNeeded();
 }
 
 void Node::updateWorldTransformMatrix() {
@@ -94,11 +154,16 @@ void Node::draw(bool needUpdateWorldTransform) {
         if (needUpdateWorldTransform)
             updateWorldTransformMatrix();
 
-        for (auto& m : meshes) {
-            m->useProgram();
-            m->setVertexAttr("z", z);
-            m->setUniform("transform", transform.world);
-            m->draw();
+        if (!meshes.empty()) {
+            program->bind();
+            program->setVertexAttr("z", z);
+            program->setUniform("transform", transform.world);
+            program->setVertexAttr("color", color);
+            for (auto& m : meshes) {
+                if (m->getMode() == GL_POINTS)
+                    program->setUniform("pointSize", pointSize);
+                m->draw();
+            }
         }
 
         for (auto& child : children)

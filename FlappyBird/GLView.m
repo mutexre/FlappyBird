@@ -113,14 +113,25 @@
     [self deleteFramebuffer];
 }
 
+- (void)setupScale {
+    NSString* systemVersion = [[UIDevice currentDevice] systemVersion];
+    NSComparisonResult order = [systemVersion compare:@"8.0" options:NSNumericSearch];
+
+    UIScreen* screen = self.window.screen;
+    float scale;
+    if (order == NSOrderedAscending)
+        scale = screen.scale;
+    else
+        scale = screen.nativeScale;
+
+    if (self.contentScaleFactor != scale)
+        self.contentScaleFactor = scale;
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    UIScreen* screen = self.window.screen;
-    float scale = screen.nativeScale;
-    if (self.contentScaleFactor != scale)
-        self.contentScaleFactor = scale;
-
+    [self setupScale];
     [self setupFramebuffer];
 
     CGRect f = self.frame;

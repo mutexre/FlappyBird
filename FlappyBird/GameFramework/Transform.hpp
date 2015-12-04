@@ -22,7 +22,14 @@ private:
 
 public:
     void setScale(vec2);
+    void setSX(float);
+    void setSY(float);
+
     void setRotationAngle(float);
+
     void setTranslate(vec2);
+    void setX(float);
+    void setY(float);
+
     bool updateIfNeeded();
 };

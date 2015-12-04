@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <fstream>
 #include <sstream>
+#include <UIKit/UIKit.h>
 #include "GameFramework.hpp"
 
 std::string readFile(const std::string& path) {
@@ -91,6 +92,31 @@ loadProgram(const char* vertexShaderName,
     if (!programSrc) return 0;
 
     return std::make_shared<Program>(programSrc.value);
+}
+
+std::unique_ptr<unsigned char>
+loadImage(const char* fileName, GLint& format, unsigned& w, unsigned& h)
+{
+    UIImage* img = [UIImage imageNamed:@"tap to play"];//[NSString stringWithUTF8String:fileName]];
+    CGImageRef image = img.CGImage;
+    if (!image) throw runtime_error(string("Failed to load image: ") + fileName);
+
+    w = static_cast<unsigned>(CGImageGetWidth(image));
+    h = static_cast<unsigned>(CGImageGetHeight(image));
+    auto data = std::unique_ptr<unsigned char>(new unsigned char[(w * h) << 2]);
+
+    CGContextRef context = CGBitmapContextCreate(data.get(), w, h, 8, w << 2,
+                                                 CGImageGetColorSpace(image),
+                                                 kCGImageAlphaPremultipliedLast);
+
+//    CGContextScaleCTM(context, 1.f, -1.f);
+//    CGContextRotateCTM(context, M_PI);
+    CGContextDrawImage(context, CGRectMake(0, 0, w, h), image);
+    CGContextRelease(context);
+
+    format = GL_RGBA;
+
+    return data;
 }
 
 void checkGlErrors()

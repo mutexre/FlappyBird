@@ -24,6 +24,7 @@ class Game;
 #include <list>
 #include <vector>
 #include <map>
+#include <random>
 #include <CoreFoundation/CoreFoundation.h>
 #include <OpenGLES/ES3/gl.h>
 #include "glm/glm.hpp"

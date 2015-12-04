@@ -8,7 +8,8 @@
 
 #include "GameFramework.hpp"
 
-Circle::Circle(unsigned n) {
+Circle::Circle(unsigned n) : Figure(Type::circle)
+{
     indices.triangleFan.push_back(n);
     indices.triangleFan.push_back(0);
 
@@ -39,6 +40,7 @@ Circle::Circle(unsigned n) {
         x = _x;
         y = _y;
         coords.push_back(vec3(x, y, 1.f));
+        uvs.push_back(vec2(0.5f * x + 1.f, 0.5f * y + 1.f));
     }
     indices.lineStrip.push_back(0);
     coords.push_back(vec3(0.f, 0.f, 1.f));

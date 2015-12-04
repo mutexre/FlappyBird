@@ -13,6 +13,16 @@ void Transform::setScale(vec2 xy) {
     invalidate();
 }
 
+void Transform::setSX(float x) {
+    scale.x = x;
+    invalidate();
+}
+
+void Transform::setSY(float y) {
+    scale.y = y;
+    invalidate();
+}
+
 void Transform::setRotationAngle(float angle) {
     rotationAngle = angle;
     invalidate();
@@ -20,6 +30,16 @@ void Transform::setRotationAngle(float angle) {
 
 void Transform::setTranslate(vec2 xy) {
     translate = xy;
+    invalidate();
+}
+
+void Transform::setX(float x) {
+    translate.x = x;
+    invalidate();
+}
+
+void Transform::setY(float y) {
+    translate.y = y;
     invalidate();
 }
 

@@ -49,7 +49,9 @@ private:
     void setupUI(const shared_ptr<Program>&);
 
 public:
-    FlappyBird(const Playfield::Config& playfieldConfig, const shared_ptr<Program>& uiProgram);
+    FlappyBird(const Playfield::Config& playfieldConfig,
+               const shared_ptr<Program>& uiProgram,
+               const vec4& backgroundColor);
     virtual ~FlappyBird() {}
 
     virtual void setFrame(float, float, float, float) override;

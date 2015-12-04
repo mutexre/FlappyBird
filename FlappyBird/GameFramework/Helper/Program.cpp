@@ -16,12 +16,12 @@ Program::~Program() {
     if (program) glDeleteProgram(program);
 }
 
-GLuint Program::compile(GLenum type, const std::string& source) {
+GLuint Program::compile(GLenum type, const string& source) {
     GLint isCompiled;
     const GLchar* sources[] = { source.c_str() };
 
     GLuint ID = glCreateShader(type);
-    if (!ID) throw std::runtime_error("failed to create shader");
+    if (!ID) throw runtime_error("failed to create shader");
 
     glShaderSource(ID, 1, sources, 0);
     glCompileShader(ID);
@@ -39,10 +39,10 @@ GLuint Program::compile(GLenum type, const std::string& source) {
 
             glGetShaderInfoLog(ID, logLength, &actualCompilationLogLength, log);
 
-            throw std::runtime_error(log);
+            throw runtime_error(log);
         }
 
-        throw std::runtime_error("failed to compile shader");
+        throw runtime_error("failed to compile shader");
     }
 
     return ID;
@@ -66,10 +66,10 @@ void Program::link(GLuint id) {
 
             glGetProgramInfoLog(id, logLength, &actualCompilationLogLength, log);
 
-            throw std::runtime_error(log);
+            throw runtime_error(log);
         }
 
-        throw std::runtime_error("link program failed");
+        throw runtime_error("link program failed");
     }
 }
 
@@ -89,7 +89,7 @@ void Program::queryActiveAttributes() {
 
         GLuint location = glGetAttribLocation(program, name);
 
-        std::string attribName(name);
+        string attribName(name);
         attribs[attribName] = Attrib{ attribName, location, type, size };
     }
 }
@@ -110,7 +110,7 @@ void Program::queryActiveUniforms() {
 
         GLuint location = glGetUniformLocation(program, name);
 
-        std::string uniformName(name);
+        string uniformName(name);
         uniforms[uniformName] = Uniform{ uniformName, location, type, size };
     }
 }
@@ -125,19 +125,19 @@ const char* convertGlslShaderType(GLuint type) {
 
 void Program::load(const Source& src) {
     struct Shaders {
-        std::map<GLuint, GLuint> ids;
+        map<GLuint, GLuint> ids;
 
         ~Shaders() {
             for (auto id : ids)
                 if (id.second) glDeleteShader(id.second);
         }
 
-        void compile(GLuint type, const std::string& src) {
+        void compile(GLuint type, const string& src) {
             try {
                 ids[type] = Program::compile(type, src);
             }
-            catch (const std::runtime_error& err) {
-                throw std::runtime_error(std::string(convertGlslShaderType(type))
+            catch (const runtime_error& err) {
+                throw runtime_error(string(convertGlslShaderType(type))
                                          + " shader compilation failed: "
                                          + err.what());
             }
@@ -154,15 +154,15 @@ void Program::load(const Source& src) {
     shaders.compile(GL_FRAGMENT_SHADER, src.fragment);
 
 	auto id = glCreateProgram();
-	if (!id) throw std::runtime_error("failed to create shader program");
+	if (!id) throw runtime_error("failed to create shader program");
 
     shaders.attach(id);
 
     try {
         link(id);
     }
-    catch (const std::runtime_error& err) {
-        throw std::runtime_error(std::string("failed to link program: ") + err.what());
+    catch (const runtime_error& err) {
+        throw runtime_error(string("failed to link program: ") + err.what());
     }
 
     program = id;
@@ -175,38 +175,50 @@ void Program::bind() {
     glUseProgram(program);
 }
 
-GLuint Program::getAttributeLocation(const std::string& name) {
+bool Program::isAttributeActive(const string& name) {
+    return attribs.find(name) != attribs.end();
+}
+
+bool Program::isUniformActive(const string& name) {
+    return uniforms.find(name) != uniforms.end();
+}
+
+GLuint Program::getAttributeLocation(const string& name) {
     return attribs[name].location;
 }
 
-GLuint Program::getUniformLocation(const std::string& name) {
+GLuint Program::getUniformLocation(const string& name) {
     return uniforms[name].location;
 }
 
-void Program::setVertexAttr(const std::string& name, float value) {
+void Program::setVertexAttr(const string& name, float value) {
     glVertexAttrib1f(getAttributeLocation(name), value);
 }
 
-void Program::setVertexAttr(const std::string& name, float x, float y, float z, float w) {
+void Program::setVertexAttr(const string& name, float x, float y, float z, float w) {
     glVertexAttrib4f(getAttributeLocation(name), x, y, z, w);
 }
 
-void Program::setVertexAttr(const std::string& name, const vec4& xyzw) {
+void Program::setVertexAttr(const string& name, const vec4& xyzw) {
     glVertexAttrib4fv(getAttributeLocation(name), (const GLfloat*)&xyzw);
 }
 
-void Program::setUniform(const std::string& name, float value) {
+void Program::setUniform(const string& name, int value) {
+    glUniform1i(getUniformLocation(name), value);
+}
+
+void Program::setUniform(const string& name, float value) {
     glUniform1f(getUniformLocation(name), value);
 }
 
-void Program::setUniform(const std::string& name, float x, float y, float z, float w) {
+void Program::setUniform(const string& name, float x, float y, float z, float w) {
     glUniform4f(getUniformLocation(name), x, y, z, w);
 }
 
-void Program::setUniform(const std::string& name, const vec4& xyzw) {
+void Program::setUniform(const string& name, const vec4& xyzw) {
     glUniform4fv(getUniformLocation(name), 1, (const GLfloat*)&xyzw);
 }
 
-void Program::setUniform(const std::string& name, const mat3& m, bool transpose) {
+void Program::setUniform(const string& name, const mat3& m, bool transpose) {
     glUniformMatrix3fv(getUniformLocation(name), 1, transpose ? GL_TRUE : GL_FALSE, (const GLfloat*)value_ptr(m));
 }

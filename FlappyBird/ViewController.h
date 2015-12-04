@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GLView.h"
-#import "Game.hpp"
+#import "GameFramework.hpp"
 
 @interface ViewController : UIViewController<GLViewDelegate> {
     std::unique_ptr<Game> game;

@@ -8,8 +8,6 @@
 
 #pragma once
 
-#include <string>
-
 class Game
 {
 protected:
@@ -17,12 +15,17 @@ protected:
         float x, y, w, h, aspect;
     }
     frame;
+    vec4 backgroundColor;
 
 public:
-    Game() {}
+    Game(const vec4& backgroundColor) {
+        this->backgroundColor = backgroundColor;
+    }
+
     virtual ~Game() {}
 
     virtual void setFrame(float x, float y, float w, float h);
+    void setBackgroundColor(const vec4&);
     virtual void setupGL();
     virtual void update(double t);
     virtual void draw();

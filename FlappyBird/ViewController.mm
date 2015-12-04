@@ -26,34 +26,76 @@
 
 - (void)createGame {
     try {
-        shared_ptr<Program> program;
+        struct {
+            shared_ptr<Program> bird, obstacles, textured;
+        }
+        program;
+
         try {
-            program = loadProgram("Shader", "Shader");
+            program.bird = loadProgram("Bird", "Bird");
+            program.obstacles = loadProgram("Obstacles", "Obstacles");
+            program.textured = loadProgram("Textured", "Textured");
         }
         catch (std::runtime_error& err) {
             throw std::runtime_error(std::string("FlappyBird shader program loading failed: ") + err.what());
         }
 
+        vec4 white = vec4(1.f);
+        vec4 black = vec4(0.f, 0.f, 0.f, 1.f);
+
+        struct Theme {
+            vec4 background, bird, obstacle;
+        };
+
+        struct {
+            Theme white, black;
+        }
+        themes = {
+            { white, black, black },
+            { black, white, white }
+        };
+
+        Theme theme = themes.black;
+
         auto birdConfig =
-            Bird::Config().setProgram(program)
-                          .setShape(make_shared<Square>())
-                          .setSize(0.2f)
+            Bird::Config().setProgram(program.bird)
+                          .setShape(make_shared<Circle>(100))
+                          .setMode(GL_TRIANGLES)
+                          .setX(-0.25f)
+                          .setSize(0.1f)
                           .setZ(0.25f)
-                          .setColor(vec4(0.f, 1.f, 0.f, 1.f))
-                          .setJumpSpeed(1.2f);
+                          .setColor(theme.bird)
+                          .setJumpSpeed(1.2f)
+                          .setForceField([](float y) -> float {
+                              float g = -3.f;
+                              if (y > 0.85f) {
+                                  float dy = 10.f * (y - 0.85f);
+                                  g -= 5.0f * std::pow(dy, 2.0f);
+                              }
+                              return g;
+                          });
 
+        float dx = 0.8f;
         auto obstaclesConfig =
-            Obstacles::Config().setProgram(program)
-                               .setDx(1.f)
-                               .setWidth(0.2f)
-                               .setGapHeight(0.5f)
+            Obstacles::Config().setProgram(program.obstacles)
+                               .setMode(GL_TRIANGLES)
+                               .setDx(dx)
+                               .setWidth(0.3f)
+                               .setGapHeight(0.6f)
+                               .setGapY([=](int i) -> float {
+                                   float x = 0.5f * i * dx;
+                                   return 0.5f * std::sin(x) *
+                                                 std::sin(3.14f * x + 0.78f) *
+                                                 std::sin(1.2345f * x - 1.94f);
+                               })
+                               .setSkip(2)
                                .setZ(0.5f)
-                               .setSpeed(0.1f)
-                               .setColor(vec4());
+                               .setSpeed(0.6f)
+                               .setColor(theme.obstacle);
 
-        Playfield::Config config = { birdConfig, obstaclesConfig, -3.5f };
+        Playfield::Config config = { birdConfig, obstaclesConfig };
 
-        game = std::unique_ptr<Game>(new FlappyBird(config, program));
+        game = std::unique_ptr<Game>(new FlappyBird(config, program.textured, theme.background));
     }
     catch (const std::runtime_error& err) {
         fprintf(stderr, "%s\n", err.what());

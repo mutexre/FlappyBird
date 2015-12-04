@@ -11,7 +11,7 @@
 class Square : public Figure
 {
 public:
-    Square();
+    Square(float side = 2.f);
     virtual ~Square() {}
 
     virtual bool hasLineStrip() const override { return true; }

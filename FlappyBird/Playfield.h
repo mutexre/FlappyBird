@@ -17,7 +17,6 @@ public:
     struct Config {
         Bird::Config bird;
         Obstacles::Config obstacles;
-        float g;
     };
 
 private:
@@ -39,7 +38,7 @@ public:
     }
 
     void step(double dt) {
-        bird->step(dt, c.g);
+        bird->step(dt);
         obstacles->step(dt);
     }
 
@@ -49,9 +48,20 @@ public:
 
     void reset() {
         bird->reset();
+        obstacles->reset();
     }
 
     bool finished() const {
-        return bird->isOutOfBounds();
+        bool collide = false;
+        for (auto& child : obstacles->getChildren()) if (child->isVisible()) {
+            ObstaclePair* o = reinterpret_cast<ObstaclePair*>(child.get());
+            if (bird->testCollision(o->o[0].a, o->o[0].b) ||
+                bird->testCollision(o->o[1].a, o->o[1].b))
+            {
+                collide = true;
+                break;
+            }
+        }
+        return bird->isOutOfBounds() || collide;
     }
 };

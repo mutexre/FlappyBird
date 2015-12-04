@@ -8,16 +8,18 @@
 
 #include "GameFramework.hpp"
 
-Mesh::Mesh(const shared_ptr<Figure>& figure, const shared_ptr<Program>& program, GLenum mode, const vec4& color) {
+Mesh::Mesh(const shared_ptr<Figure>& figure,
+           const shared_ptr<Program>& program,
+           GLenum mode)
+{
     this->mode = mode;
-    this->program = program;
-    this->color = color;
 
     indices = figure->getIndices(mode);
     coords = figure->coords;
+    uvs = figure->uvs;
 
     glGenVertexArrays(1, &vao);
-    glGenBuffers(3, reinterpret_cast<GLuint*>(&buffer));
+    glGenBuffers(4, reinterpret_cast<GLuint*>(&buffer));
 
     glBindVertexArray(vao);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.element);
@@ -41,52 +43,26 @@ Mesh::Mesh(const shared_ptr<Figure>& figure, const shared_ptr<Program>& program,
     attr = program->getAttributeLocation("color");
     glDisableVertexAttribArray(attr);
 #endif
+
+    if (program->isAttributeActive("uv")) {
+        glBindBuffer(GL_ARRAY_BUFFER, buffer.uv);
+        attr = program->getAttributeLocation("uv");
+        glEnableVertexAttribArray(attr);
+        glVertexAttribPointer(attr, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+        glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(vec2), uvs.data(), GL_STATIC_DRAW);
+    }
 }
 
 Mesh::~Mesh() {
     glDeleteVertexArrays(1, &vao);
-    glDeleteBuffers(3, reinterpret_cast<GLuint*>(&buffer));
+    glDeleteBuffers(4, reinterpret_cast<GLuint*>(&buffer));
 }
 
-void Mesh::setPointSize(float size) {
-    pointSize = size;
-}
-
-void Mesh::setVertexAttr(const std::string& name, float value) {
-    program->setVertexAttr(name, value);
-}
-
-void Mesh::setVertexAttr(const std::string& name, float x, float y, float z, float w) {
-    program->setVertexAttr(name, x, y, z, w);
-}
-
-void Mesh::setVertexAttr(const std::string& name, const vec4& xyzw) {
-    program->setVertexAttr(name, xyzw);
-}
-
-void Mesh::setUniform(const std::string& name, float value) {
-    program->setUniform(name, value);
-}
-
-void Mesh::setUniform(const std::string& name, float x, float y, float z, float w) {
-    program->setUniform(name, x, y, z, w);
-}
-
-void Mesh::setUniform(const std::string& name, const vec4& xyzw) {
-    program->setUniform(name, xyzw);
-}
-
-void Mesh::setUniform(const std::string& name, const mat3& m, bool transpose) {
-    program->setUniform(name, m, transpose);
-}
-
-void Mesh::useProgram() {
-    program->bind();
+GLenum Mesh::getMode() const {
+    return mode;
 }
 
 void Mesh::draw() {
     glBindVertexArray(vao);
-    setVertexAttr("color", color);
-    if (mode == GL_POINTS) setUniform("pointSize", pointSize);
     glDrawElements(mode, GLsizei(indices.size()), GL_UNSIGNED_INT, nullptr);
 }

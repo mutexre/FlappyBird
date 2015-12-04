@@ -8,7 +8,8 @@
 
 #include "GameFramework.hpp"
 
-Triangle::Triangle(float a, float b, float c) {
+Triangle::Triangle(float a, float b, float c) : Figure(Type::triangle)
+{
     indices.points = { 0, 1, 2 };
     indices.lines = { 0, 1, 1, 2, 2, 0 };
     indices.lineStrip = { 0, 1, 2, 0 };
@@ -21,5 +22,11 @@ Triangle::Triangle(float a, float b, float c) {
         { -1.f, -1.f, 1.f },
         { -1.f, +1.f, 1.f },
         { +1.f, -1.f, 1.f }
+    };
+
+    uvs = {
+        { 0.f, 0.f },
+        { 0.f, 1.f },
+        { 1.f, 0.f }
     };
 }

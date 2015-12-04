@@ -18,7 +18,25 @@ Option<Program::Source> readProgramSource(const char* vertex, const char* fragme
 shared_ptr<Program> loadProgram(const char* vertexShaderName, const char* fragmentShaderName);
 
 unique_ptr<unsigned char>
-loadImage(const char* fileName, GLint& format, unsigned& w, unsigned& h);
+loadImage(const char* imageName, GLint& format, unsigned& w, unsigned& h);
+
+unique_ptr<unsigned char>
+createTextBitmap(const char* text,
+                 const char* fontName,
+                 float fontSize,
+                 vec4 backgroundColor,
+                 vec4 fontColor,
+                 unsigned w, unsigned h,
+                 float x, float y);
+
+shared_ptr<Texture>
+createTextureFromText(const char* text,
+                      const char* fontName,
+                      float fontSize,
+                      vec4 backgroundColor,
+                      vec4 fontColor,
+                      unsigned w, unsigned h,
+                      float x, float y);
 
 shared_ptr<Texture> createTexture(const string&, unsigned w, unsigned h);
 

@@ -62,6 +62,6 @@ public:
                 break;
             }
         }
-        return bird->isOutOfBounds() || collide;
+        return collide;
     }
 };

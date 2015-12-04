@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		921233721C11A45B005BC285 /* FlappyBird.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921233701C11A45B005BC285 /* FlappyBird.cpp */; };
 		922552B81C09C12B00C994BE /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479571C06367900132374 /* Node.cpp */; };
 		922552BB1C09CB7B00C994BE /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 922552B91C09CB7B00C994BE /* Transform.cpp */; };
 		92257F9A1C00510900187A7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92257F991C00510900187A7A /* main.m */; };
@@ -16,7 +17,6 @@
 		92257FB51C007C0D00187A7A /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92257FB41C007C0D00187A7A /* ViewController.mm */; };
 		92257FB71C00849E00187A7A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92257FB61C00849E00187A7A /* OpenGLES.framework */; };
 		92257FBA1C008E0D00187A7A /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92257FB91C008E0D00187A7A /* GLView.m */; };
-		924479231C05CEA900132374 /* FlappyBird.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479211C05CEA900132374 /* FlappyBird.cpp */; };
 		924479471C06363600132374 /* Helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 924479421C06363600132374 /* Helper.mm */; };
 		924479481C06363600132374 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479451C06363600132374 /* Program.cpp */; };
 		924479511C06365100132374 /* Circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479491C06365100132374 /* Circle.cpp */; };
@@ -39,6 +39,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		921233701C11A45B005BC285 /* FlappyBird.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FlappyBird.cpp; path = FB/FlappyBird.cpp; sourceTree = "<group>"; };
+		921233711C11A45B005BC285 /* FlappyBird.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FlappyBird.hpp; path = FB/FlappyBird.hpp; sourceTree = "<group>"; };
+		921233731C11A468005BC285 /* Bird.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Bird.hpp; path = FB/Nodes/Bird.hpp; sourceTree = "<group>"; };
+		921233741C11A468005BC285 /* Obstacles.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Obstacles.hpp; path = FB/Nodes/Obstacles.hpp; sourceTree = "<group>"; };
+		921233751C11A468005BC285 /* Playfield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Playfield.h; path = FB/Nodes/Playfield.h; sourceTree = "<group>"; };
 		922552B91C09CB7B00C994BE /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = GameFramework/Transform.cpp; sourceTree = "<group>"; };
 		922552BA1C09CB7B00C994BE /* Transform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Transform.hpp; path = GameFramework/Transform.hpp; sourceTree = "<group>"; };
 		92257F951C00510900187A7A /* FlappyBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlappyBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,8 +58,6 @@
 		92257FB61C00849E00187A7A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		92257FB81C008E0D00187A7A /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
 		92257FB91C008E0D00187A7A /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
-		924479211C05CEA900132374 /* FlappyBird.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlappyBird.cpp; sourceTree = "<group>"; };
-		924479221C05CEA900132374 /* FlappyBird.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FlappyBird.hpp; sourceTree = "<group>"; };
 		924479421C06363600132374 /* Helper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Helper.mm; path = GameFramework/Helper/Helper.mm; sourceTree = "<group>"; };
 		924479431C06363600132374 /* Helper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Helper.hpp; path = GameFramework/Helper/Helper.hpp; sourceTree = "<group>"; };
 		924479441C06363600132374 /* Option.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Option.hpp; path = GameFramework/Helper/Option.hpp; sourceTree = "<group>"; };
@@ -75,7 +78,6 @@
 		924479591C0636A700132374 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = GameFramework/Game.cpp; sourceTree = "<group>"; };
 		9244795A1C0636A700132374 /* Game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Game.hpp; path = GameFramework/Game.hpp; sourceTree = "<group>"; };
 		9244795B1C0636A700132374 /* GameFramework.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameFramework.hpp; path = GameFramework/GameFramework.hpp; sourceTree = "<group>"; };
-		9294D6D61C0BADF100E44390 /* Bird.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Bird.hpp; sourceTree = "<group>"; };
 		9294D6DE1C0BC75500E44390 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = GameFramework/Helper/Texture.cpp; sourceTree = "<group>"; };
 		9294D6DF1C0BC75500E44390 /* Texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Texture.hpp; path = GameFramework/Helper/Texture.hpp; sourceTree = "<group>"; };
 		9294D6E41C0BE13C00E44390 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = GameFramework/Image.cpp; sourceTree = "<group>"; };
@@ -83,8 +85,6 @@
 		9294D6E71C0BEB9D00E44390 /* game over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game over.png"; path = "Resources/game over.png"; sourceTree = "<group>"; };
 		9294D6E81C0BEB9D00E44390 /* retry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = retry.png; path = Resources/retry.png; sourceTree = "<group>"; };
 		9294D6E91C0BEB9D00E44390 /* tap to play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tap to play.png"; path = "Resources/tap to play.png"; sourceTree = "<group>"; };
-		9294D6EE1C0C085200E44390 /* Obstacles.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Obstacles.hpp; sourceTree = "<group>"; };
-		9294D6F01C0CFEC100E44390 /* Playfield.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Playfield.h; sourceTree = "<group>"; };
 		9294D6F21C10162B00E44390 /* Textured.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Textured.fsh; path = Shaders/Textured.fsh; sourceTree = "<group>"; };
 		9294D6F31C10162B00E44390 /* Textured.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Textured.vsh; path = Shaders/Textured.vsh; sourceTree = "<group>"; };
 		9294D6F61C10740C00E44390 /* Bird.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Bird.fsh; path = Shaders/Bird.fsh; sourceTree = "<group>"; };
@@ -227,8 +227,8 @@
 			isa = PBXGroup;
 			children = (
 				9294D6F11C0D329500E44390 /* Nodes */,
-				924479221C05CEA900132374 /* FlappyBird.hpp */,
-				924479211C05CEA900132374 /* FlappyBird.cpp */,
+				921233711C11A45B005BC285 /* FlappyBird.hpp */,
+				921233701C11A45B005BC285 /* FlappyBird.cpp */,
 			);
 			name = FB;
 			sourceTree = "<group>";
@@ -236,9 +236,9 @@
 		9294D6F11C0D329500E44390 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				9294D6D61C0BADF100E44390 /* Bird.hpp */,
-				9294D6EE1C0C085200E44390 /* Obstacles.hpp */,
-				9294D6F01C0CFEC100E44390 /* Playfield.h */,
+				921233731C11A468005BC285 /* Bird.hpp */,
+				921233741C11A468005BC285 /* Obstacles.hpp */,
+				921233751C11A468005BC285 /* Playfield.h */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -335,7 +335,7 @@
 				924479531C06365100132374 /* Square.cpp in Sources */,
 				92257F9A1C00510900187A7A /* main.m in Sources */,
 				924479521C06365100132374 /* Figure.cpp in Sources */,
-				924479231C05CEA900132374 /* FlappyBird.cpp in Sources */,
+				921233721C11A45B005BC285 /* FlappyBird.cpp in Sources */,
 				9244795D1C06452E00132374 /* Mesh.cpp in Sources */,
 				922552B81C09C12B00C994BE /* Node.cpp in Sources */,
 				92257FBA1C008E0D00187A7A /* GLView.m in Sources */,

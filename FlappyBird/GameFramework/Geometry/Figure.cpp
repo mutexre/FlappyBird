@@ -18,6 +18,6 @@ const vector<unsigned> Figure::getIndices(GLenum mode) {
         case GL_TRIANGLE_STRIP: return indices.triangleFan;
         case GL_TRIANGLE_FAN: return indices.triangleFan;
         default:
-            throw runtime_error(std::string("Figure: unknown mode value ") + to_string(mode));
+            throw runtime_error(string("Figure: unknown mode value ") + to_string(mode));
     }
 }

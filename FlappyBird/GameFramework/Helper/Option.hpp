@@ -22,7 +22,7 @@ public:
 
     void define(T&& value) {
         defined = true;
-        this->value = std::move(value);
+        this->value = move(value);
     }
 
     void define(const T& value) {
@@ -42,7 +42,7 @@ public:
         return defined ? value : defaultValue;
     }
 
-    T getOrExecute(std::function<void()> f) {
+    T getOrExecute(function<void()> f) {
         if (!defined) f();
         return value;
     }

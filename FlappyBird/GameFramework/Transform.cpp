@@ -57,8 +57,8 @@ void Transform::update() {
     m.scale[0][0] = scale[0];
     m.scale[1][1] = scale[1];
 
-    float c = std::cos(rotationAngle);
-    float s = std::sin(rotationAngle);
+    float c = cos(rotationAngle);
+    float s = sin(rotationAngle);
     m.rotate = identity;
     m.rotate[0][0] = c;
     m.rotate[0][1] = s;

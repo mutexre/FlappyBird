@@ -36,8 +36,8 @@
             program.obstacles = loadProgram("Obstacles", "Obstacles");
             program.textured = loadProgram("Textured", "Textured");
         }
-        catch (std::runtime_error& err) {
-            throw std::runtime_error(std::string("FlappyBird shader program loading failed: ") + err.what());
+        catch (runtime_error& err) {
+            throw runtime_error(string("FlappyBird shader program loading failed: ") + err.what());
         }
 
         vec4 white = vec4(1.f);
@@ -70,23 +70,28 @@
                               float g = -3.f;
                               if (y > 0.85f) {
                                   float dy = 10.f * (y - 0.85f);
-                                  g -= 5.0f * std::pow(dy, 2.0f);
+                                  g -= 5.0f * pow(dy, 2.0f);
+                              }
+                              else if (y < -0.85) {
+                                  float dy = 10.f * (y + 0.85f);
+                                  g += 5.0f * pow(dy, 2.0f);
                               }
                               return g;
                           });
 
         float dx = 0.8f;
         auto obstaclesConfig =
-            Obstacles::Config().setProgram(program.obstacles)
+            Obstacles::Config().setMainProgram(program.obstacles)
+                               .setLabelProgram(program.textured)
                                .setMode(GL_TRIANGLES)
                                .setDx(dx)
-                               .setWidth(0.3f)
+                               .setWidth(0.25f)
                                .setGapHeight(0.6f)
                                .setGapY([=](int i) -> float {
-                                   float x = 0.5f * i * dx;
-                                   return 0.5f * std::sin(x) *
-                                                 std::sin(3.14f * x + 0.78f) *
-                                                 std::sin(1.2345f * x - 1.94f);
+                                   float x = 1.f * i * dx;
+                                   return 0.5f * sin(x) *
+                                                 sin(3.14f * x + 0.78f) *
+                                                 sin(1.2345f * x - 1.94f);
                                })
                                .setSkip(2)
                                .setZ(0.5f)
@@ -95,9 +100,9 @@
 
         Playfield::Config config = { birdConfig, obstaclesConfig };
 
-        game = std::unique_ptr<Game>(new FlappyBird(config, program.textured, theme.background));
+        game = unique_ptr<Game>(new FlappyBird(config, program.textured, theme.background));
     }
-    catch (const std::runtime_error& err) {
+    catch (const runtime_error& err) {
         fprintf(stderr, "%s\n", err.what());
         fprintf(stderr, "Sorry, failed to initialize application. Exiting.\n");
         exit(1);

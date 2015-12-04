@@ -135,6 +135,7 @@
     [self setupFramebuffer];
 
     CGRect f = self.frame;
+    float scale = self.contentScaleFactor;
     f.origin.x *= scale;
     f.origin.y *= scale;
     f.size.width *= scale;

@@ -26,6 +26,7 @@ class Game;
 #include <map>
 #include <random>
 #include <CoreFoundation/CoreFoundation.h>
+#include <CoreGraphics/CoreGraphics.h>
 #include <OpenGLES/ES3/gl.h>
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"

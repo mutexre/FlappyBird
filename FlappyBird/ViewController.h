@@ -11,7 +11,7 @@
 #import "GameFramework.hpp"
 
 @interface ViewController : UIViewController<GLViewDelegate> {
-    std::unique_ptr<Game> game;
+    unique_ptr<Game> game;
 }
 
 @property BOOL animated;

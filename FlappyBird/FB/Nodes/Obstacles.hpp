@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <CoreText/CoreText.h>
+
 class ObstaclePair : public Node
 {
     friend class Playfield;
@@ -15,6 +17,7 @@ class ObstaclePair : public Node
 private:
     float w, z, gapH;
     shared_ptr<Mesh> mesh;
+    struct { shared_ptr<Program> main, label; } program;
     vec4 color;
 
     struct Obstacle {
@@ -33,10 +36,12 @@ private:
     }
     o[2];
 
+    shared_ptr<Image> label;
+
 private:
     shared_ptr<Node> createSubNode() {
         auto node = make_shared<Node>();
-        node->setProgram(program);
+        node->setProgram(program.main);
         node->setColor(color);
         node->setZ(z);
         node->setSX(w);
@@ -58,9 +63,20 @@ private:
         o[1].updateAB();
     }
 
+    static shared_ptr<Texture> createLabelTexture(unsigned n) {
+        return createTextureFromText(to_string(n).c_str(),
+                                     "Courier",
+                                      80.f,
+                                      vec4(0.f, 0.f, 0.f, 0.f),
+                                      vec4(0.f, 0.f, 0.f, 1.f),
+                                      300, 100,
+                                      0.f, 0.f);
+    }
+
 public:
     ObstaclePair(const shared_ptr<Mesh>& mesh,
-                 const shared_ptr<Program>& program,
+                 const shared_ptr<Program>& mainProgram,
+                 const shared_ptr<Program>& labelProgram,
                  float w, float z, float gapH, const vec4& color)
     {
         this->w = w;
@@ -68,7 +84,8 @@ public:
         this->gapH = gapH;
         this->mesh = mesh;
         this->color = color;
-        setProgram(program);
+        program.main = mainProgram;
+        program.label = labelProgram;
     }
 
     virtual ~ObstaclePair() {}
@@ -76,11 +93,20 @@ public:
     virtual void createSubNodes() override {
         addChild(o[0].node = createSubNode());
         addChild(o[1].node = createSubNode());
+
+        float labelH = 0.5f * w / 3.f;
+        label = make_shared<Image>(0.5f * w, labelH, 0.f, 0.95f - labelH, 0.1f, vec4(1.f, 0.f, 0.f, 1.f), nullptr, program.label);
+        addChild(label);
+    }
+
+    void setIndex(unsigned n) {
+        label->setTexture(createLabelTexture(n));
     }
 
     void update(float y) {
         updateModelTransformMatrix();
         updateWorldTransformMatrix();
+        label->updateWorldTransformMatrix();
         setUpperY(y);
         setLowerY(y);
     }
@@ -92,14 +118,15 @@ public:
     struct Config {
         using GapY = function<float(int)>;
 
-        shared_ptr<Program> program;
+        struct { shared_ptr<Program> main, label; } program;
         float dx, w, gapH, z, velocity;
         GapY gapY;
         unsigned skip;
         GLenum mode;
         vec4 color;
 
-        Config& setProgram(const shared_ptr<Program>& p) { program = p; return *this; }
+        Config& setMainProgram(const shared_ptr<Program>& p) { program.main = p; return *this; }
+        Config& setLabelProgram(const shared_ptr<Program>& p) { program.label = p; return *this; }
         Config& setMode(GLenum m) { mode = m; return *this; }
         Config& setDx(float dx) { this->dx = dx; return *this; }
         Config& setWidth(float w) { this->w = w; return *this; }
@@ -120,7 +147,7 @@ private:
 private:
     void createMesh() {
         auto f = make_shared<Square>(1.f);
-        mesh = make_shared<Mesh>(f, c.program, c.mode);
+        mesh = make_shared<Mesh>(f, c.program.main, c.mode);
     }
 
 public:
@@ -136,8 +163,8 @@ public:
     virtual void createSubNodes() override
     {
         children.clear();
-        for (unsigned i = 0; i < std::ceil(2.f / c.dx); i++) {
-            auto o = make_shared<ObstaclePair>(mesh, c.program, c.w, c.z, c.gapH, c.color);
+        for (unsigned i = 0; i < ceil(2.f / c.dx); i++) {
+            auto o = make_shared<ObstaclePair>(mesh, c.program.main, c.program.label, c.w, c.z, c.gapH, c.color);
             o->createSubNodes();
             addChild(o);
         }
@@ -146,7 +173,6 @@ public:
     void reset() {
         x0 = 0.0;
         offset = rand() % 10000;
-        printf("Offset: %d\n", offset);
         update();
     }
 
@@ -161,8 +187,8 @@ public:
         }
         l, r;
 
-        l.f = std::modf(x0 / c.dx, &l.i);
-        r.f = std::modf((x0 + 2.0) / c.dx, &r.i);
+        l.f = modf(x0 / c.dx, &l.i);
+        r.f = modf((x0 + 2.0) / c.dx, &r.i);
 
         int start, end;
         float x = -1.f - l.f * c.dx;
@@ -183,6 +209,7 @@ public:
             if (i > c.skip && i <= end) {
                 ObstaclePair* o = reinterpret_cast<ObstaclePair*>(child.get());
                 o->setX(x);
+                o->setIndex(i - c.skip);
                 o->update(c.gapY(offset + i));
                 o->unhide();
             }
@@ -192,4 +219,6 @@ public:
             i++;
         }
     }
+
+
 };

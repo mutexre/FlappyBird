@@ -24,6 +24,10 @@ Image::Image(float w, float h,
     this->texture = texture;
 }
 
+void Image::setTexture(const shared_ptr<Texture>& t) {
+    texture = t;
+}
+
 void Image::draw(bool needUpdateWorldTransform) {
     program->bind();
     program->setUniform("texture", 0);

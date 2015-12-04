@@ -15,7 +15,7 @@ Circle::Circle(unsigned n) : Figure(Type::circle)
 
     float x = 0.f, y = 1.f;
     float phi = 2.f * M_PI / double(n);
-    float c = std::cos(phi), s = std::sin(phi);
+    float c = cos(phi), s = sin(phi);
 
     for (unsigned i = 0; i < n; i++)
     {

@@ -16,8 +16,8 @@ void main() {
 //    highp float t;
     highp float phase = 10.0 * t;
     a = abs(sin(-30.0 * r + phase));
-    b = abs(sin(-31.0 * r + phase));
-    c = abs(sin(-32.0 * r + phase));
+    b = abs(sin(-45.0 * r + phase));
+    c = abs(sin(-20.0 * r + phase));
     highp vec3 rgb = vec3(a * colorVarying.r,
                           b * colorVarying.g,
                           c * colorVarying.b);

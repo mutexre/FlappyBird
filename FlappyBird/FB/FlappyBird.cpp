@@ -26,23 +26,44 @@ void FlappyBird::setupUI(const shared_ptr<Program>& program)
 {
     shared_ptr<Texture> texture;
 
-    texture = make_shared<Texture>(findResourcePathByName("tap to play", "png").value);
+    texture = createTextureFromText("Tap to play",
+                                    "Courier",
+                                    80.f,
+                                    vec4(0.f, 0.f, 0.f, 1.f),
+                                    vec4(1.f, 1.f, 1.f, 1.f),
+                                    600, 200,
+                                    0.f, 0.f);
+
     nodes.ui.tapToPlay = make_shared<Image>(0.3f, 0.1f,
                                             0.f, 0.f, 0.2f,
                                             vec4(0.5f, 1.f, 0.5f, 1.f),
                                             texture, program);
     nodes.root->addChild(nodes.ui.tapToPlay);
 
-    texture = make_shared<Texture>(findResourcePathByName("game over", "png").value);
-    nodes.ui.gameOver = make_shared<Image>(0.4f, 0.15f,
-                                           0.f, 0.17f, 0.2f,
+    texture = createTextureFromText("Game Over",
+                                    "Courier",
+                                    80.f,
+                                    vec4(0.f, 0.f, 0.f, 0.8f),
+                                    vec4(1.f, 1.f, 1.f, 1.f),
+                                    600, 200,
+                                    0.f, 0.f);
+
+    nodes.ui.gameOver = make_shared<Image>(0.45f, 0.15f,
+                                           0.f, 0.10f, 0.2f,
                                            vec4(1.f, 0.f, 0.0f, 1.f),
                                            texture, program);
     nodes.root->addChild(nodes.ui.gameOver);
 
-    texture = make_shared<Texture>(findResourcePathByName("retry", "png").value);
-    nodes.ui.retry = make_shared<Image>(0.3f, 0.1f,
-                                        0.f, -0.1f, 0.2f,
+    texture = createTextureFromText("Tap to play again",
+                                    "Courier",
+                                    45.f,
+                                    vec4(1.f, 0.f, 0.f, 1.0f),
+                                    vec4(1.f, 1.f, 1.f, 1.f),
+                                    600, 100,
+                                    0.f, 0.f);
+
+    nodes.ui.retry = make_shared<Image>(0.45f, 0.075f,
+                                        0.f, -0.15f, 0.2f,
                                         vec4(1.f, 1.f, 0.0f, 1.f),
                                         texture, program);
     nodes.root->addChild(nodes.ui.retry);
@@ -131,7 +152,7 @@ void FlappyBird::gotoState(State state, State fromState) {
         case State::over:
             if (score.current > score.best)
                 score.best = score.current;
-            nodes.playfield->hide();
+//            nodes.playfield->hide();
             nodes.ui.gameOver->unhide();
             nodes.ui.retry->unhide();
         break;

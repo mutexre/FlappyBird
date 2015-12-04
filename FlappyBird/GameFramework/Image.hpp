@@ -22,5 +22,6 @@ public:
 
     virtual ~Image() {}
 
+    void setTexture(const shared_ptr<Texture>&);
     virtual void draw(bool needUpdateWorldTransform) override;
 };

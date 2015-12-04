@@ -8,26 +8,27 @@
 #include <stdlib.h>
 #include "GameFramework.hpp"
 
-Texture::Texture(Type type, const std::string& filepath, ...) {
+Texture::Texture(Type type, const string& imageName, ...) {
     switch (type) {
         case Type::t2d: {
-            unsigned w, h;
             GLint format;
-
-            unique_ptr<unsigned char> imageData = loadImage(filepath.c_str(), format, w, h);
+            unique_ptr<unsigned char> imageData = loadImage(imageName.c_str(), format, w, h);
             texture = createTexture2D(imageData.get(), format, w, h);
-
             this->type = Type::t2d;
         }
         break;
 
         default:
-            throw std::runtime_error("unsupported texture type");
-        break;
+            throw runtime_error("unsupported texture type");
     }
 }
 
-Texture::Texture(const std::string& filepath) : Texture(Type::t2d, filepath) {}
+Texture::Texture(const string& imageName) : Texture(Type::t2d, imageName) {}
+
+Texture::Texture(const void* data, unsigned w, unsigned h) {
+    texture = createTexture2D(data, GL_RGBA, w, h);
+    type = Type::t2d;
+}
 
 Texture::~Texture() {
     if (texture) glDeleteTextures(1, &texture);

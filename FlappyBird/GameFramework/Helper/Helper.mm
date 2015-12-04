@@ -10,11 +10,12 @@
 #include <fstream>
 #include <sstream>
 #include <UIKit/UIKit.h>
+#include <CoreText/CoreText.h>
 #include "GameFramework.hpp"
 
-std::string readFile(const std::string& path) {
-    std::ifstream ifs(path);
-    std::stringstream ss;
+string readFile(const string& path) {
+    ifstream ifs(path);
+    stringstream ss;
     ss << ifs.rdbuf();
     return ss.str();
 }
@@ -23,40 +24,40 @@ auto cfDeleter = [](CFTypeRef ref) {
     if (ref) CFRelease(ref);
 };
 
-Option<std::string> findResourcePathByName(CFBundleRef bundle, const char* name, const char* ext) {
+Option<string> findResourcePathByName(CFBundleRef bundle, const char* name, const char* ext) {
     auto _name = CFStringCreateWithCString(kCFAllocatorDefault, name, kCFStringEncodingUTF8);
-    std::unique_ptr<const __CFString, decltype(cfDeleter)> nameCFStr{ _name, cfDeleter };
+    unique_ptr<const __CFString, decltype(cfDeleter)> nameCFStr{ _name, cfDeleter };
 
     auto _ext = CFStringCreateWithCString(kCFAllocatorDefault, ext, kCFStringEncodingUTF8);
-    std::unique_ptr<const __CFString, decltype(cfDeleter)> extCFStr{ _ext, cfDeleter };
+    unique_ptr<const __CFString, decltype(cfDeleter)> extCFStr{ _ext, cfDeleter };
 
     auto _url = CFBundleCopyResourceURL(bundle, nameCFStr.get(), extCFStr.get(), nullptr);
-    std::unique_ptr<const __CFURL, decltype(cfDeleter)> url{ _url, cfDeleter };
+    unique_ptr<const __CFURL, decltype(cfDeleter)> url{ _url, cfDeleter };
     if (url) {
         auto _path = CFURLCopyFileSystemPath(url.get(), kCFURLPOSIXPathStyle);
-        std::unique_ptr<const __CFString, decltype(cfDeleter)> path{ _path, cfDeleter };
+        unique_ptr<const __CFString, decltype(cfDeleter)> path{ _path, cfDeleter };
 
         size_t bufferSize = 256;
         Boolean result;
         do {
-            std::unique_ptr<char[]> buffer(new char[bufferSize]);
+            unique_ptr<char[]> buffer(new char[bufferSize]);
             result = CFStringGetCString(path.get(), buffer.get(), bufferSize, kCFStringEncodingUTF8);
             if (result)
-                return Option<std::string>(buffer.get());
+                return Option<string>(buffer.get());
             else
                 bufferSize <<= 1;
         }
         while (bufferSize < 2 * 1024);
     }
 
-    return Option<std::string>();
+    return Option<string>();
 }
 
-Option<std::string> findResourcePathByName(const char* name, const char* ext) {
+Option<string> findResourcePathByName(const char* name, const char* ext) {
     return findResourcePathByName(CFBundleGetMainBundle(), name, ext);
 }
 
-Option<std::string> findResourcePathByName(const std::string& name, const std::string& ext) {
+Option<string> findResourcePathByName(const string& name, const string& ext) {
     return findResourcePathByName(name.c_str(), ext.c_str());
 }
 
@@ -84,39 +85,127 @@ Option<Program::Source> readProgramSource(const char* vertex, const char* fragme
     return Option<Program::Source>(src);
 }
 
-std::shared_ptr<Program>
+shared_ptr<Program>
 loadProgram(const char* vertexShaderName,
             const char* fragmentShaderName)
 {
     auto programSrc = readProgramSource(vertexShaderName, fragmentShaderName);
     if (!programSrc) return 0;
 
-    return std::make_shared<Program>(programSrc.value);
+    return make_shared<Program>(programSrc.value);
 }
 
-std::unique_ptr<unsigned char>
-loadImage(const char* fileName, GLint& format, unsigned& w, unsigned& h)
+unique_ptr<unsigned char>
+loadImage(const char* imageName, GLint& format, unsigned& w, unsigned& h)
 {
-    UIImage* img = [UIImage imageNamed:@"tap to play"];//[NSString stringWithUTF8String:fileName]];
+    UIImage* img = [UIImage imageNamed:[NSString stringWithUTF8String:imageName]];
     CGImageRef image = img.CGImage;
-    if (!image) throw runtime_error(string("Failed to load image: ") + fileName);
+    if (!image) throw runtime_error(string("Failed to load image: ") + imageName);
 
     w = static_cast<unsigned>(CGImageGetWidth(image));
     h = static_cast<unsigned>(CGImageGetHeight(image));
-    auto data = std::unique_ptr<unsigned char>(new unsigned char[(w * h) << 2]);
+    auto data = unique_ptr<unsigned char>(new unsigned char[(w * h) << 2]);
 
     CGContextRef context = CGBitmapContextCreate(data.get(), w, h, 8, w << 2,
                                                  CGImageGetColorSpace(image),
                                                  kCGImageAlphaPremultipliedLast);
 
-//    CGContextScaleCTM(context, 1.f, -1.f);
-//    CGContextRotateCTM(context, M_PI);
     CGContextDrawImage(context, CGRectMake(0, 0, w, h), image);
     CGContextRelease(context);
 
     format = GL_RGBA;
 
     return data;
+}
+
+unique_ptr<unsigned char>
+createTextBitmap(const char* text,
+                 const char* fontName,
+                 float fontSize,
+                 vec4 backgroundColor,
+                 vec4 fontColor,
+                 unsigned w, unsigned h,
+                 float x, float y)
+{
+    auto data = unique_ptr<unsigned char>(new unsigned char[(w * h) << 2]);
+
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(data.get(), w, h, 8, w << 2,
+                                                 colorSpace,
+                                                 kCGImageAlphaPremultipliedLast);
+
+    CFStringRef fontNameRef = CFStringCreateWithCString(kCFAllocatorDefault, fontName, kCFStringEncodingUTF8);
+    CTFontRef font = CTFontCreateWithName(fontNameRef, fontSize, nullptr);
+    CGRect textRect = CGRectMake(0.f, 0.f, w, h);
+    CGMutablePathRef path = CGPathCreateMutable();
+//    CGPathAddRect(path, nullptr, textRect);
+
+    CGRect boundingBox = CTFontGetBoundingBox(font);
+
+    float midHeight = h * 0.5f;
+    midHeight -= boundingBox.size.height * 0.5f;
+
+    CGPathAddRect(path, nullptr, CGRectMake(0, midHeight, w, boundingBox.size.height));
+
+    CFStringRef str = CFStringCreateWithCString(kCFAllocatorDefault, text, kCFStringEncodingUTF8);
+    auto strLen = CFStringGetLength(str);
+    CFRange range = CFRangeMake(0, strLen);
+
+    CGFloat rgba[] = { fontColor.r, fontColor.g, fontColor.b, fontColor.a };
+    CGColorRef color = CGColorCreate(colorSpace, rgba);
+
+    CTTextAlignment paragraphAlignment = kCTCenterTextAlignment;
+    CTParagraphStyleSetting paragraphStyleSetting = {
+        kCTParagraphStyleSpecifierAlignment,
+        sizeof(paragraphAlignment),
+        &paragraphAlignment
+    };
+    CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(&paragraphStyleSetting, 1);
+
+    const void* keys[] = { kCTFontAttributeName, kCTForegroundColorAttributeName, kCTParagraphStyleAttributeName };
+    const void* values[] = { font, color, paragraphStyle };
+    CFDictionaryRef dict = CFDictionaryCreate(kCFAllocatorDefault, keys, values, 3, nullptr, nullptr);
+
+    CFAttributedStringRef attrStr = CFAttributedStringCreate(kCFAllocatorDefault, str, dict);
+    CTFramesetterRef frameSetter = CTFramesetterCreateWithAttributedString(attrStr);
+    CTFrameRef frame = CTFramesetterCreateFrame(frameSetter, range, path, nullptr);
+
+    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+    CGContextTranslateCTM(context, x, y);
+    CGContextScaleCTM(context, 1.f, 1.f);
+
+    CGContextSetRGBFillColor(context, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+    CGContextFillRect(context, textRect);
+
+    CTFrameDraw(frame, context);
+
+    CFRelease(frame);
+    CFRelease(frameSetter);
+    CFRelease(attrStr);
+    CFRelease(dict);
+    CFRelease(paragraphStyle);
+    CFRelease(color);
+    CFRelease(str);
+    CGPathRelease(path);
+    CFRelease(font);
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+    CFRelease(fontNameRef);
+
+    return data;
+}
+
+shared_ptr<Texture>
+createTextureFromText(const char* text,
+                      const char* fontName,
+                      float fontSize,
+                      vec4 backgroundColor,
+                      vec4 fontColor,
+                      unsigned w, unsigned h,
+                      float x, float y)
+{
+    auto data = createTextBitmap(text, fontName, fontSize, backgroundColor, fontColor, w, h, x, y);
+    return make_shared<Texture>(data.get(), w, h);
 }
 
 void checkGlErrors()

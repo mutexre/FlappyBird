@@ -87,10 +87,6 @@ public:
         updatePosition();
     }
 
-    bool isOutOfBounds() const {
-        return y < -1.f - c.size;
-    }
-
     bool testCollision(vec2 a, vec2 b)
     {
         struct {
@@ -107,7 +103,7 @@ public:
 
             float dist[4];
             for (unsigned i = 0; i < 4; i++)
-                dist[i] = std::hypot(center.x - p[i].x, center.y - p[i].y);
+                dist[i] = hypot(center.x - p[i].x, center.y - p[i].y);
 
             unsigned nearestPointIndex = 0;
             float minDist = dist[0];

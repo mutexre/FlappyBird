@@ -18,6 +18,7 @@ class Transform;
 class Node;
 class Mesh;
 class Image;
+class TextLabel;
 class Game;
 
 #include <string>
@@ -47,4 +48,5 @@ using namespace glm;
 #include "Node.hpp"
 #include "Mesh.hpp"
 #include "Image.hpp"
+#include "TextLabel.hpp"
 #include "Game.hpp"

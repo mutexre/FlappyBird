@@ -57,50 +57,55 @@
 
         Theme theme = themes.black;
 
-        auto birdConfig =
-            Bird::Config().setProgram(program.bird)
-                          .setShape(make_shared<Circle>(100))
-                          .setMode(GL_TRIANGLES)
-                          .setX(-0.25f)
-                          .setSize(0.1f)
-                          .setZ(0.25f)
-                          .setColor(theme.bird)
-                          .setJumpSpeed(1.2f)
-                          .setForceField([](float y) -> float {
-                              float g = -3.f;
-                              if (y > 0.85f) {
-                                  float dy = 10.f * (y - 0.85f);
-                                  g -= 5.0f * pow(dy, 2.0f);
-                              }
-                              else if (y < -0.85) {
-                                  float dy = 10.f * (y + 0.85f);
-                                  g += 5.0f * pow(dy, 2.0f);
-                              }
-                              return g;
-                          });
+        auto bird = make_shared<Bird>();
+        bird->setProgram(program.bird)
+             .setShape(make_shared<Circle>(100))
+             .setMode(GL_TRIANGLES)
+             .setX(-0.25f)
+             .setSize(0.1f)
+             .setZ(0.25f)
+             .setColor(theme.bird)
+             .setJumpSpeed(1.2f)
+             .setForceField([](float y) -> float {
+                 float g = -3.f;
+                 if (y > 0.85f) {
+                     float dy = 10.f * (y - 0.85f);
+                     g -= 5.0f * pow(dy, 2.0f);
+                 }
+                 else if (y < -0.85) {
+                     float dy = 10.f * (y + 0.85f);
+                     g += 5.0f * pow(dy, 2.0f);
+                 }
+                 return g;
+             });
 
         float dx = 0.8f;
-        auto obstaclesConfig =
-            Obstacles::Config().setMainProgram(program.obstacles)
-                               .setLabelProgram(program.textured)
-                               .setMode(GL_TRIANGLES)
-                               .setDx(dx)
-                               .setWidth(0.25f)
-                               .setGapHeight(0.6f)
-                               .setGapY([=](int i) -> float {
-                                   float x = 1.f * i * dx;
-                                   return 0.5f * sin(x) *
-                                                 sin(3.14f * x + 0.78f) *
-                                                 sin(1.2345f * x - 1.94f);
-                               })
-                               .setSkip(2)
-                               .setZ(0.5f)
-                               .setSpeed(0.6f)
-                               .setColor(theme.obstacle);
+        auto obstacles = make_shared<Obstacles>();
+        obstacles->setMainProgram(program.obstacles)
+                  .setLabelProgram(program.textured)
+                  .setMode(GL_TRIANGLES)
+                  .setDx(dx)
+                  .setWidth(0.25f)
+                  .setGapHeight(0.6f)
+                  .setGapY([=](int i) -> float {
+                      float x = 1.f * i * dx;
+                      return 0.5f * sin(x) *
+                                    sin(3.14f * x + 0.78f) *
+                                    sin(1.2345f * x - 1.94f);
+                  })
+                  .setSkip(2)
+                  .setZ(0.5f)
+                  .setSpeed(0.6f)
+                  .setColor(theme.obstacle);
+                  .createSubNodes();
 
-        Playfield::Config config = { birdConfig, obstaclesConfig };
+        auto playfield = make_shared<Playfield>();
+        playfield->setBird(bird).setObstacles(obstacles);
 
-        game = unique_ptr<Game>(new FlappyBird(config, program.textured, theme.background));
+        auto firstScreen = make_shared<FirstScreen>();
+        auto gameOver = make_shared<GameOver>();
+
+        game = unique_ptr<Game>(new FlappyBird(firstScreen, playfield, gameOver, program.textured, theme.background));
     }
     catch (const runtime_error& err) {
         fprintf(stderr, "%s\n", err.what());

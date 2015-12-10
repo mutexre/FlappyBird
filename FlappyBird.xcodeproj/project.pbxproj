@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		921233721C11A45B005BC285 /* FlappyBird.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921233701C11A45B005BC285 /* FlappyBird.cpp */; };
+		9212337A1C128EA1005BC285 /* TextLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921233781C128EA0005BC285 /* TextLabel.cpp */; };
 		922552B81C09C12B00C994BE /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924479571C06367900132374 /* Node.cpp */; };
 		922552BB1C09CB7B00C994BE /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 922552B91C09CB7B00C994BE /* Transform.cpp */; };
 		92257F9A1C00510900187A7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92257F991C00510900187A7A /* main.m */; };
@@ -41,6 +42,10 @@
 		921233731C11A468005BC285 /* Bird.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Bird.hpp; path = FB/Nodes/Bird.hpp; sourceTree = "<group>"; };
 		921233741C11A468005BC285 /* Obstacles.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Obstacles.hpp; path = FB/Nodes/Obstacles.hpp; sourceTree = "<group>"; };
 		921233751C11A468005BC285 /* Playfield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Playfield.h; path = FB/Nodes/Playfield.h; sourceTree = "<group>"; };
+		921233761C127C18005BC285 /* GameOver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameOver.h; path = FB/Nodes/GameOver.h; sourceTree = "<group>"; };
+		921233771C127C3D005BC285 /* FirstScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FirstScreen.h; path = FB/Nodes/FirstScreen.h; sourceTree = "<group>"; };
+		921233781C128EA0005BC285 /* TextLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextLabel.cpp; path = GameFramework/TextLabel.cpp; sourceTree = "<group>"; };
+		921233791C128EA0005BC285 /* TextLabel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TextLabel.hpp; path = GameFramework/TextLabel.hpp; sourceTree = "<group>"; };
 		922552B91C09CB7B00C994BE /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = GameFramework/Transform.cpp; sourceTree = "<group>"; };
 		922552BA1C09CB7B00C994BE /* Transform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Transform.hpp; path = GameFramework/Transform.hpp; sourceTree = "<group>"; };
 		92257F951C00510900187A7A /* FlappyBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlappyBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +174,8 @@
 				924479551C06367900132374 /* Mesh.cpp */,
 				9294D6E51C0BE13C00E44390 /* Image.hpp */,
 				9294D6E41C0BE13C00E44390 /* Image.cpp */,
+				921233791C128EA0005BC285 /* TextLabel.hpp */,
+				921233781C128EA0005BC285 /* TextLabel.cpp */,
 				9244795A1C0636A700132374 /* Game.hpp */,
 				924479591C0636A700132374 /* Game.cpp */,
 			);
@@ -217,21 +224,23 @@
 		9294D6D41C0BADD000E44390 /* FB */ = {
 			isa = PBXGroup;
 			children = (
-				9294D6F11C0D329500E44390 /* Nodes */,
+				9294D6F11C0D329500E44390 /* Playfield */,
 				921233711C11A45B005BC285 /* FlappyBird.hpp */,
 				921233701C11A45B005BC285 /* FlappyBird.cpp */,
+				921233771C127C3D005BC285 /* FirstScreen.h */,
+				921233761C127C18005BC285 /* GameOver.h */,
 			);
 			name = FB;
 			sourceTree = "<group>";
 		};
-		9294D6F11C0D329500E44390 /* Nodes */ = {
+		9294D6F11C0D329500E44390 /* Playfield */ = {
 			isa = PBXGroup;
 			children = (
 				921233731C11A468005BC285 /* Bird.hpp */,
 				921233741C11A468005BC285 /* Obstacles.hpp */,
 				921233751C11A468005BC285 /* Playfield.h */,
 			);
-			name = Nodes;
+			name = Playfield;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,6 +324,7 @@
 				924479541C06365100132374 /* Triangle.cpp in Sources */,
 				9294D6E01C0BC75500E44390 /* Texture.cpp in Sources */,
 				92257F9D1C00510900187A7A /* AppDelegate.mm in Sources */,
+				9212337A1C128EA1005BC285 /* TextLabel.cpp in Sources */,
 				92257FB51C007C0D00187A7A /* ViewController.mm in Sources */,
 				924479511C06365100132374 /* Circle.cpp in Sources */,
 				924479471C06363600132374 /* Helper.mm in Sources */,

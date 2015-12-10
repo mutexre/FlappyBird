@@ -95,7 +95,7 @@ public:
         addChild(o[1].node = createSubNode());
 
         float labelH = 0.5f * w / 3.f;
-        label = make_shared<Image>(0.5f * w, labelH, 0.f, 0.95f - labelH, 0.1f, vec4(1.f, 0.f, 0.f, 1.f), nullptr, program.label);
+        label = make_shared<TextLabel>();//(0.5f * w, labelH, 0.f, 0.95f - labelH, 0.1f, vec4(1.f, 0.f, 0.f, 1.f), nullptr, program.label);
         addChild(label);
     }
 
@@ -115,56 +115,55 @@ public:
 class Obstacles : public Node
 {
 public:
-    struct Config {
-        using GapY = function<float(int)>;
+    using GapY = function<float(int)>;
 
-        struct { shared_ptr<Program> main, label; } program;
-        float dx, w, gapH, z, velocity;
-        GapY gapY;
-        unsigned skip;
-        GLenum mode;
-        vec4 color;
-
-        Config& setMainProgram(const shared_ptr<Program>& p) { program.main = p; return *this; }
-        Config& setLabelProgram(const shared_ptr<Program>& p) { program.label = p; return *this; }
-        Config& setMode(GLenum m) { mode = m; return *this; }
-        Config& setDx(float dx) { this->dx = dx; return *this; }
-        Config& setWidth(float w) { this->w = w; return *this; }
-        Config& setGapHeight(float gapH) { this->gapH = gapH; return *this; }
-        Config& setGapY(const GapY& gapY) { this->gapY = gapY; return *this; }
-        Config& setSkip(const unsigned& skip) { this->skip = skip; return *this; }
-        Config& setZ(float z) { this->z = z; return *this; }
-        Config& setSpeed(float v) { this->velocity = v; return *this; }
-        Config& setColor(const vec4& c) { this->color = c; return *this; }
-    };
+    Obstacles& setMainProgram(const shared_ptr<Program>& p) { program.main = p; return *this; }
+    Obstacles& setLabelProgram(const shared_ptr<Program>& p) { program.label = p; return *this; }
+    Obstacles& setMode(GLenum m) { mode = m; return *this; }
+    Obstacles& setDx(float dx) { this->dx = dx; return *this; }
+    Obstacles& setWidth(float w) { this->w = w; return *this; }
+    Obstacles& setGapHeight(float gapH) { this->gapH = gapH; return *this; }
+    Obstacles& setGapY(const GapY& gapY) { this->gapY = gapY; return *this; }
+    Obstacles& setSkip(const unsigned& skip) { this->skip = skip; return *this; }
+    Obstacles& setZ(float z) { this->z = z; return *this; }
+    Obstacles& setSpeed(float v) { this->velocity = v; return *this; }
+    Obstacles& setColor(const vec4& c) { this->color = c; return *this; }
 
 private:
-    Config c;
-    double x0;
+// Configuration
+    struct { shared_ptr<Program> main, label; } program;
+    float dx, w, gapH, z, velocity;
+    GapY gapY;
+    unsigned skip;
+    GLenum mode;
+    vec4 color;
     shared_ptr<Mesh> mesh;
+
+// State variables
+    double x0;
     int offset;
 
 private:
     void createMesh() {
         auto f = make_shared<Square>(1.f);
-        mesh = make_shared<Mesh>(f, c.program.main, c.mode);
+        mesh = make_shared<Mesh>(f, program.main, mode);
     }
 
 public:
-    Obstacles(const Config& config) {
-        c = config;
+    Obstacles() {}
+    virtual ~Obstacles() {}
+
+    void init() {
         createMesh();
         srand(static_cast<unsigned>(time(0)));
-        reset();
+        createSubNodes();
     }
-
-    virtual ~Obstacles() {}
 
     virtual void createSubNodes() override
     {
         children.clear();
-        for (unsigned i = 0; i < ceil(2.f / c.dx); i++) {
-            auto o = make_shared<ObstaclePair>(mesh, c.program.main, c.program.label, c.w, c.z, c.gapH, c.color);
+        for (unsigned i = 0; i < ceil(2.f / dx); i++) {
+            auto o = make_shared<ObstaclePair>(mesh, program.main, program.label, w, z, gapH, color);
             o->createSubNodes();
             addChild(o);
         }
@@ -177,7 +176,7 @@ public:
     }
 
     void step(double dt) {
-        x0 += c.velocity * dt;
+        x0 += velocity * dt;
         update();
     }
 
@@ -187,35 +186,35 @@ public:
         }
         l, r;
 
-        l.f = modf(x0 / c.dx, &l.i);
-        r.f = modf((x0 + 2.0) / c.dx, &r.i);
+        l.f = modf(x0 / dx, &l.i);
+        r.f = modf((x0 + 2.0) / dx, &r.i);
 
         int start, end;
-        float x = -1.f - l.f * c.dx;
-        if (l.f * c.dx < 0.5f * c.w)
+        float x = -1.f - l.f * dx;
+        if (l.f * dx < 0.5f * w)
             start = l.i;
         else {
             start = l.i + 1;
-            x += c.dx;
+            x += dx;
         }
 
-        if ((1.0 - r.f) * c.dx < 0.5f * c.w)
+        if ((1.0 - r.f) * dx < 0.5f * w)
             end = r.i + 1;
         else
             end = r.i;
 
         unsigned i = start;
         for (auto& child : children) {
-            if (i > c.skip && i <= end) {
+            if (i > skip && i <= end) {
                 ObstaclePair* o = reinterpret_cast<ObstaclePair*>(child.get());
                 o->setX(x);
-                o->setIndex(i - c.skip);
-                o->update(c.gapY(offset + i));
+                o->setIndex(i - skip);
+                o->update(gapY(offset + i));
                 o->unhide();
             }
             else
                 child->hide();
-            x += c.dx;
+            x += dx;
             i++;
         }
     }

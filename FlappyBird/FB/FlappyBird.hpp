@@ -9,9 +9,9 @@
 #pragma once
 
 #include "GameFramework.hpp"
+#include "FirstScreen.h"
 #include "Playfield.h"
-#include "Bird.hpp"
-#include "Obstacles.hpp"
+#include "GameOver.h"
 
 class FlappyBird : public Game
 {
@@ -31,15 +31,13 @@ private:
     score;
 
 private:
+    shared_ptr<Node> root;
     struct {
-        shared_ptr<Node> root;
+        shared_ptr<FirstScreen> first;
         shared_ptr<Playfield> playfield;
-        struct {
-            shared_ptr<Image> tapToPlay, gameOver, retry;
-        }
-        ui;
+        shared_ptr<GameOver> gameOver;
     }
-    nodes;
+    screen;
 
     Option<double> lastTime;
 
@@ -49,10 +47,14 @@ private:
     void setupUI(const shared_ptr<Program>&);
 
 public:
-    FlappyBird(const Playfield::Config& playfieldConfig,
+    FlappyBird(const shared_ptr<FirstScreen>&,
+               const shared_ptr<Playfield>&,
+               const shared_ptr<GameOver>&,
                const shared_ptr<Program>& uiProgram,
                const vec4& backgroundColor);
     virtual ~FlappyBird() {}
+
+    FlappyBird& setPlayfield(const shared_ptr<Playfield>&);
 
     virtual void setFrame(float, float, float, float) override;
     virtual void update(double t) override;

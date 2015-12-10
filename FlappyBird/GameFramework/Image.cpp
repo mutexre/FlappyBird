@@ -8,7 +8,14 @@
 
 #include "GameFramework.hpp"
 
-Image::Image(float w, float h,
+Image::Image(const shared_ptr<Program>& p) {
+    auto f = make_shared<Square>();
+    meshes.clear();
+    addMesh(make_shared<Mesh>(f, p, GL_TRIANGLES));
+    setProgram(p);
+}
+
+/*Image::Image(float w, float h,
              float x, float y, float z,
              const vec4& color,
              const shared_ptr<Texture>& texture,
@@ -22,6 +29,10 @@ Image::Image(float w, float h,
     setColor(color);
     setProgram(program);
     this->texture = texture;
+}*/
+
+const shared_ptr<Texture>& Image::getTexture() const {
+    return texture;
 }
 
 void Image::setTexture(const shared_ptr<Texture>& t) {
@@ -30,7 +41,9 @@ void Image::setTexture(const shared_ptr<Texture>& t) {
 
 void Image::draw(bool needUpdateWorldTransform) {
     program->bind();
-    program->setUniform("texture", 0);
-    texture->bind(0);
+    if (texture) {
+        program->setUniform("texture", 0);
+        texture->bind(0);
+    }
     Node::draw(needUpdateWorldTransform);
 }

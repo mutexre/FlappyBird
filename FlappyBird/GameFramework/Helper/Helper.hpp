@@ -8,6 +8,18 @@
 
 #pragma once
 
+#define GF_PROPERTY_GETTER(name, type, var) type name() const { return var; }
+#define GF_PROPERTY_SETTER(class, name, type, var) class& name(type x) { this->var = x; return *this; }
+#define GF_PROPERTY(class, getter, setter, type, var) \
+    GF_PROPERTY_GETTER(getter, type, var); \
+    GF_PROPERTY_SETTER(class, setter, type, var);
+
+#define GF_PROPERTY_GETTER_CONST_REF(name, type, var) const type& name() const { return var; return *this; }
+#define GF_PROPERTY_SETTER_CONST_REF(class, name, type, var) class& name(const type& x) { this->var = x; return *this; }
+#define GF_PROPERTY_CONST_REF(class, getter, setter, type, var) \
+    GF_PROPERTY_GETTER_CONST_REF(getter, type, var); \
+    GF_PROPERTY_SETTER_CONST_REF(class, setter, type, var);
+
 string readFile(const string& path);
 
 Option<string> findResourcePathByName(CFBundleRef bundle, const char* name, const char* ext);

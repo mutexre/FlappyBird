@@ -8,16 +8,29 @@
 
 #include "FlappyBird.hpp"
 
-FlappyBird::FlappyBird(const Playfield::Config& pfConfig,
+FlappyBird::FlappyBird(const shared_ptr<FirstScreen>& firstScreen,
+                       const shared_ptr<Playfield>& playfield,
+                       const shared_ptr<GameOver>& gameOver,
                        const shared_ptr<Program>& uiProgram,
                        const vec4& backgroundColor)
 : Game(backgroundColor)
 {
-    nodes.root = make_shared<Node>();
-    nodes.playfield = make_shared<Playfield>(pfConfig);
-    nodes.root->addChild(nodes.playfield);
-    nodes.playfield->createSubNodes();
-    setupUI(uiProgram);
+    root = make_shared<Node>();
+
+    screen.first = firstScreen;
+    screen.playfield = playfield;
+    screen.gameOver = gameOver;
+    /*make_shared<FirstScreen>(pfConfig);
+    root->addChild(screen.first);
+    screen.first->createSubNodes();*/
+
+    screen.playfield = make_shared<Playfield>();
+    root->addChild(screen.playfield);
+    screen.playfield->createSubNodes();
+
+    screen.gameOver = make_shared<GameOver>();
+    root->addChild(screen.gameOver);
+    screen.gameOver->createSubNodes();
 
     gotoState(State::idle, State::none);
 }
@@ -25,53 +38,15 @@ FlappyBird::FlappyBird(const Playfield::Config& pfConfig,
 void FlappyBird::setupUI(const shared_ptr<Program>& program)
 {
     shared_ptr<Texture> texture;
+}
 
-    texture = createTextureFromText("Tap to play",
-                                    "Courier",
-                                    80.f,
-                                    vec4(0.f, 0.f, 0.f, 1.f),
-                                    vec4(1.f, 1.f, 1.f, 1.f),
-                                    600, 200,
-                                    0.f, 0.f);
-
-    nodes.ui.tapToPlay = make_shared<Image>(0.3f, 0.1f,
-                                            0.f, 0.f, 0.2f,
-                                            vec4(0.5f, 1.f, 0.5f, 1.f),
-                                            texture, program);
-    nodes.root->addChild(nodes.ui.tapToPlay);
-
-    texture = createTextureFromText("Game Over",
-                                    "Courier",
-                                    80.f,
-                                    vec4(0.f, 0.f, 0.f, 0.8f),
-                                    vec4(1.f, 1.f, 1.f, 1.f),
-                                    600, 200,
-                                    0.f, 0.f);
-
-    nodes.ui.gameOver = make_shared<Image>(0.45f, 0.15f,
-                                           0.f, 0.10f, 0.2f,
-                                           vec4(1.f, 0.f, 0.0f, 1.f),
-                                           texture, program);
-    nodes.root->addChild(nodes.ui.gameOver);
-
-    texture = createTextureFromText("Tap to play again",
-                                    "Courier",
-                                    45.f,
-                                    vec4(1.f, 0.f, 0.f, 1.0f),
-                                    vec4(1.f, 1.f, 1.f, 1.f),
-                                    600, 100,
-                                    0.f, 0.f);
-
-    nodes.ui.retry = make_shared<Image>(0.45f, 0.075f,
-                                        0.f, -0.15f, 0.2f,
-                                        vec4(1.f, 1.f, 0.0f, 1.f),
-                                        texture, program);
-    nodes.root->addChild(nodes.ui.retry);
+FlappyBird& setPlayfield(const shared_ptr<Playfield>&) {
+    
 }
 
 void FlappyBird::setFrame(float x, float y, float w, float h) {
     Game::setFrame(x, y, w, h);
-    nodes.root->setScale(h / w, 1.f);
+    root->setScale(h / w, 1.f);
 }
 
 void FlappyBird::update(double t) {
@@ -79,8 +54,8 @@ void FlappyBird::update(double t) {
         case State::active:
             if (lastTime) {
                 auto dt = t - lastTime.value;
-                nodes.playfield->step(dt);
-                if (nodes.playfield->finished()) {
+                screen.playfield->step(dt);
+                if (screen.playfield->finished()) {
                     gotoState(State::over);
                     break;
                 }
@@ -94,7 +69,7 @@ void FlappyBird::update(double t) {
 
 void FlappyBird::draw() {
     Game::draw();
-    nodes.root->draw(false);
+    root->draw(false);
 }
 
 void FlappyBird::tap(float x, float y) {
@@ -119,7 +94,7 @@ void FlappyBird::touch(float x, float y)
 {
     switch (state) {
         case State::active:
-            nodes.playfield->touch();
+            screen.playfield->touch();
         break;
 
         default: break;
@@ -132,29 +107,26 @@ void FlappyBird::gotoState(State state, State fromState) {
     this->state = state;
     switch (state) {
         case State::idle:
-            nodes.playfield->hide();
-            nodes.ui.tapToPlay->unhide();
-            nodes.ui.gameOver->hide();
-            nodes.ui.retry->hide();
+            screen.first->unhide();
+            screen.playfield->hide();
+            screen.gameOver->hide();
         break;
 
         case State::active:
             score.current = score.best = 0;
-            nodes.playfield->reset();
+            screen.playfield->reset();
             lastTime.undefine();
 
-            nodes.ui.tapToPlay->hide();
-            nodes.ui.gameOver->hide();
-            nodes.ui.retry->hide();
-            nodes.playfield->unhide();
+            screen.first->hide();
+            screen.playfield->unhide();
+            screen.gameOver->hide();
         break;
 
         case State::over:
             if (score.current > score.best)
                 score.best = score.current;
-//            nodes.playfield->hide();
-            nodes.ui.gameOver->unhide();
-            nodes.ui.retry->unhide();
+//            screen.playfield->hide();
+            screen.gameOver->unhide();
         break;
 
         default: break;

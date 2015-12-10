@@ -12,8 +12,9 @@ shared_ptr<Program> Node::getProgram() const {
     return program;
 }
 
-void Node::setProgram(const shared_ptr<Program>& p) {
+Node& Node::setProgram(const shared_ptr<Program>& p) {
     program = p;
+    return *this;
 }
 
 weak_ptr<Node> Node::getParent() const {
@@ -31,6 +32,11 @@ list<shared_ptr<Node>>& Node::getChildren() {
 void Node::addChild(const shared_ptr<Node>& child) {
     children.push_back(child);
     child->setParent(shared_from_this());
+}
+
+void Node::removeChild(const shared_ptr<Node>& child) {
+    children.remove(child);
+    child->setParent(nullptr);
 }
 
 bool Node::isVisible() const {

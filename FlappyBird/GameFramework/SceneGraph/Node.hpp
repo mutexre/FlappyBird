@@ -11,20 +11,21 @@
 class Node : public enable_shared_from_this<Node>
 {
 public:
-    enum class Type {
-        none,
-        mesh
+    struct Config {
     };
 
 protected:
+    string name;
+    bool visible = true;
+    vec2 scale, translate;
+    float rotationAngle;
+    float z, pointSize;
+    vec4 color;
+    shared_ptr<Program> program;
+
     weak_ptr<Node> parent;
     list<shared_ptr<Node>> children;
-    shared_ptr<Program> program;
     list<shared_ptr<Mesh>> meshes;
-    bool visible = true;
-    float z = 0.f;
-    vec4 color;
-    float pointSize = 1.f;
 
     struct {
         Transform model;
@@ -32,19 +33,32 @@ protected:
     }
     transform;
 
+protected:
+    void setParent(const shared_ptr<Node>&);
+
 public:
     Node() {}
     Node(const shared_ptr<Node>&);
     virtual ~Node() {}
 
+/*    GF_PROPERTY_CONST_REF(Node, getName, setName, string, name);
+    GF_PROPERTY(Node, getVisible, setVisible, bool, visible);
+    GF_PROPERTY(Node, getZ, setZ, float, z);
+    GF_PROPERTY(Node, getPointSize, setPointSize, float, pointSize);
+    GF_PROPERTY(Node, getColor, setColor, vec4, color);
+    GF_PROPERTY(Node, getProgram, setProgram, const shared_ptr<Program>&, program);*/
+
+    const string& getName() const;
+    Node& setName(const string&);
+
     shared_ptr<Program> getProgram() const;
-    void setProgram(const shared_ptr<Program>&);
+    Node& setProgram(const shared_ptr<Program>&);
 
     weak_ptr<Node> getParent() const;
-    void setParent(const shared_ptr<Node>&);
 
     list<shared_ptr<Node>>& getChildren();
     void addChild(const shared_ptr<Node>&);
+    void removeChild(const shared_ptr<Node>&);
 
     bool isVisible() const;
     void makeVisible(bool = true);

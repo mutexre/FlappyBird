@@ -13,28 +13,23 @@
 
 class Playfield : public Node
 {
-public:
-    struct Config {
-        Bird::Config bird;
-        Obstacles::Config obstacles;
-    };
-
 private:
-    Config c;
     shared_ptr<Bird> bird;
     shared_ptr<Obstacles> obstacles;
 
 public:
-    Playfield(const Config& config) {
-        c = config;
-    }
-
     virtual ~Playfield() {}
 
-    virtual void createSubNodes() override {
-        addChild(bird = make_shared<Bird>(c.bird));
-        addChild(obstacles = make_shared<Obstacles>(c.obstacles));
-        obstacles->createSubNodes();
+    Playfield& setBird(const shared_ptr<Bird>& node) {
+        if (bird) children.remove(bird);
+        addChild(bird = node);
+        return *this;
+    }
+
+    Playfield& setObstacles(const shared_ptr<Obstacles>& node) {
+        if (obstacles) children.remove(obstacles);
+        addChild(obstacles = node);
+        return *this;
     }
 
     void step(double dt) {

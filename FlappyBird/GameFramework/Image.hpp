@@ -10,18 +10,18 @@
 
 class Image : public Node
 {
-private:
+protected:
     shared_ptr<Texture> texture;
 
-public:
-    Image(float w, float h,
-          float x, float y, float z,
-          const vec4& color,
-          const shared_ptr<Texture>&,
-          const shared_ptr<Program>&);
+private:
+    void init();
 
+public:
+    Image(const shared_ptr<Program>&);
     virtual ~Image() {}
 
+    const shared_ptr<Texture>& getTexture() const;
     void setTexture(const shared_ptr<Texture>&);
+
     virtual void draw(bool needUpdateWorldTransform) override;
 };

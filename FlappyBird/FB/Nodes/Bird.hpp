@@ -11,33 +11,32 @@
 class Bird : public Node
 {
 public:
-    struct Config {
-        using ForceField = function<float(float)>;
+    using ForceField = function<float(float)>;
 
-        shared_ptr<Program> program;
-        shared_ptr<Figure> figure;
-        float x, size, z;
-        GLenum mode;
-        vec4 color;
-        float jumpSpeed;
-
-        ForceField forceField = [](float y) -> float {
-            return -3.5f;
-        };
-
-        Config& setProgram(const shared_ptr<Program>& p) { program = p; return *this; }
-        Config& setShape(const shared_ptr<Figure>& s) { figure = s; return *this; }
-        Config& setMode(GLenum m) { mode = m; return *this; }
-        Config& setX(float x) { this->x = x; return *this; }
-        Config& setSize(float s) { size = s; return *this; }
-        Config& setZ(float z) { this->z = z; return *this; }
-        Config& setColor(const vec4& c) { color = c; return *this; }
-        Config& setJumpSpeed(float speed) { jumpSpeed = speed; return *this; }
-        Config& setForceField(ForceField ff) { forceField = ff; return *this; }
-    };
+    Bird& setProgram(const shared_ptr<Program>& p) { program = p; return *this; }
+    Bird& setShape(const shared_ptr<Figure>& s) { figure = s; return *this; }
+    Bird& setMode(GLenum m) { mode = m; return *this; }
+    Bird& setX(float x) { this->x = x; return *this; }
+    Bird& setSize(float s) { size = s; return *this; }
+    Bird& setZ(float z) { this->z = z; return *this; }
+    Bird& setColor(const vec4& c) { color = c; return *this; }
+    Bird& setJumpSpeed(float speed) { jumpSpeed = speed; return *this; }
+    Bird& setForceField(ForceField ff) { forceField = ff; return *this; }
 
 private:
-    Config c;
+// Configuration
+    shared_ptr<Program> program;
+    shared_ptr<Figure> figure;
+    float x, size, z;
+    GLenum mode;
+    vec4 color;
+    float jumpSpeed;
+
+    ForceField forceField = [](float y) -> float {
+        return -3.5f;
+    };
+
+// State
     float y, v;
     struct { vec2 x, y; } bounds;
     vec2 center;
@@ -49,17 +48,17 @@ private:
     }
 
 public:
-    Bird(const Config& config) {
-        c = config;
-        addMesh(make_shared<Mesh>(c.figure, c.program, c.mode));
-        setProgram(c.program);
-        setScale(c.size);
-        setX(c.x);
-        setZ(c.z);
-        setColor(c.color);
-    }
-
+    Bird() {}
     virtual ~Bird() {}
+
+    void init() {
+        addMesh(make_shared<Mesh>(figure, program, mode));
+        setProgram(program);
+        setScale(size);
+        setX(x);
+        setZ(z);
+        setColor(color);
+    }
 
     void updatePosition() {
         setY(y);
@@ -113,7 +112,7 @@ public:
                     nearestPointIndex = i;
                 }
 
-            if (minDist < c.size) return true;
+            if (minDist < size) return true;
 
             vec2 np = p[nearestPointIndex];
             vec2 dir = normalize(vec2(np.x - center.x, np.y - center.y));
@@ -127,14 +126,14 @@ public:
                 if (dist < minDist) minDist = dist;
             }
 
-            return testRangeIntersection(vec2(-c.size, +c.size), vec2(minDist, maxDist));
+            return testRangeIntersection(vec2(-size, +size), vec2(minDist, maxDist));
         }
 
         return false;
     }
 
     void step(double dt) {
-        float a = c.forceField(y);
+        float a = forceField(y);
         v += a * dt;
         y += v * dt + 0.5f * a * dt * dt;
         t += dt;
@@ -142,7 +141,7 @@ public:
     }
 
     void jump() {
-        v = c.jumpSpeed;
+        v = jumpSpeed;
     }
 
     virtual void draw(bool needUpdateWorldTransform) override {
